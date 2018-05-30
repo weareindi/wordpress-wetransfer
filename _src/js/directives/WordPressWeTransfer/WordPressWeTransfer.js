@@ -210,6 +210,7 @@ export class WordPressWeTransfer {
             await this.createTransfer();
             await this.addItems();
             await this.uploadItems();
+            await this.finished();
         } catch(error) {
             console.error(error);
             this.updateStatus('error');
@@ -266,7 +267,7 @@ export class WordPressWeTransfer {
         const request = new Request(url, options);
 
         // Fetch
-        await fetch(request)
+        return await fetch(request)
             .then((response) => {
                 this.error.response(response);
 
@@ -275,7 +276,7 @@ export class WordPressWeTransfer {
             .then((response) => {
                 this.error.success(response);
 
-                this.token = response.token;
+                return this.token = response.token;
             })
             .catch((error) => {
                 throw new Error(error.message);
@@ -308,7 +309,7 @@ export class WordPressWeTransfer {
         const request = new Request(url, options);
 
         // Fetch
-        await fetch(request)
+        return await fetch(request)
             .then((response) => {
                 this.error.response(response);
 
@@ -317,7 +318,7 @@ export class WordPressWeTransfer {
             .then((transfer) => {
                 this.error.transfer(transfer);
 
-                this.transfer = transfer;
+                return this.transfer = transfer;
             })
             .catch((error) => {
                 throw new Error(error.message);
@@ -357,7 +358,7 @@ export class WordPressWeTransfer {
         const request = new Request(url, options);
 
         // Fetch
-        await fetch(request)
+        return await fetch(request)
             .then((response) => {
                 this.error.response(response);
 
@@ -371,7 +372,7 @@ export class WordPressWeTransfer {
                         return item.wetransfer.item.local_identifier === transferItem.local_identifier;
                     });
 
-                    this.items[index].wetransfer.transfer = transferItem;
+                    return this.items[index].wetransfer.transfer = transferItem;
                 });
             })
             .catch((error) => {
@@ -504,6 +505,7 @@ export class WordPressWeTransfer {
         return await fetch(request)
             .then((response) => {
                 this.error.response(response);
+                return true;
             })
             .catch((error) => {
                 throw new Error(error.message);
@@ -550,14 +552,20 @@ export class WordPressWeTransfer {
                     this.updateContent(FailedTemplate);
                 }
 
-                this.updateContent(SuccessTemplate, [
-                    {'${url}': this.transfer.shortened_url}
-                ]);
-
-                this.fireSuccessEvent();
+                return true;
             })
             .catch((error) => {
                 throw new Error(error.message);
             });
     }
+
+    async finished() {
+        this.updateContent(SuccessTemplate, [
+            {'${url}': this.transfer.shortened_url}
+        ]);
+
+        this.fireSuccessEvent();
+    }
+
+
 }
