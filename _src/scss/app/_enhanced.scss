@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:500,700');
+
+// Layout
+
+.wordpress-wetransfer__container {
+    background-color: #000;
+}
+
+.wordpress-wetransfer__content {
+    padding: 0;
+
+    background-color: #f5f5f5;
+}
+
+// Form
+
+.wordpress-wetransfer-form {}
+
+.wordpress-wetransfer-form__set {
+    display: block;
+
+    padding: em(20);
+}
+
+.wordpress-wetransfer-form__icon {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.wordpress-wetransfer-form__icon--add {
+    width: em(38);
+    height: em(38);
+
+    background-image: url('../images/button--add.svg');
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+
+    transform: scale(0.9474) rotate(0);
+
+    transition: transform 250ms;
+}
+
+.wordpress-wetransfer-form__set--file {
+    background-color: #fff;
+
+    cursor: pointer;
+
+    .wordpress-wetransfer-form__label {
+        margin: 0 0 0 0.5em;
+    }
+
+    &:hover {
+        .wordpress-wetransfer-form__icon--add {
+            transform: scale(1) rotate(180deg);
+        }
+    }
+}
+
+.wordpress-wetransfer-form__label {
+    display: inline-block;
+
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    text-transform: none;
+    vertical-align: middle;
+
+    user-select: none;
+}
+
+.wordpress-wetransfer-form__element {}
+
+.wordpress-wetransfer-form__element--file {
+    display: none;
+}
+
+.wordpress-wetransfer-form__input {}
+
+.wordpress-wetransfer-form__input--file {}
+
+.wordpress-wetransfer-form__button {
+    margin: 0 auto;
+}
+
+.wordpress-wetransfer-form__button--submit {
+    display: block;
+
+    min-width: em(200);
+
+    padding: 1em 2em;
+
+    line-height: 1em;
+
+    border: 0;
+    border-radius: 3em;
+
+    color: #fff;
+    background-color: #3f9fff;
+    background-image: none;
+    cursor: pointer;
+    outline: none;
+
+    &[disabled] {
+        background-color: #bdbdbd;
+        cursor: auto;
+    }
+}
+
+.wordpress-wetransfer-form__footer {
+    padding: em(20);
+}
+
+.wordpress-wetransfer-item {
+    overflow: hidden;
+
+    margin: em(1) 0 0;
+    padding: em(16) em(20);
+
+    background-color: #fff;
+}
+
+.wordpress-wetransfer-item__name {
+    float: left;
+
+    font-family: 'Roboto', sans-serif;
+}
+
+.wordpress-wetransfer-item__button {
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    background-image: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.wordpress-wetransfer-item__button--delete {
+    float: right;
+
+    .wordpress-wetransfer-item__label {
+        font-family: 'Roboto', sans-serif;
+        font-size: 0.8em;
+        font-weight: 500;
+        line-height: 1.2em;
+        color: #3f9fff;
+    }
+}
+
+.wordpress-wetransfer-transfering {
+    padding: em(20);
+}
+
+.wordpress-wetransfer-transfering__percentage {
+    text-align: center;
+}
+
+.wordpress-wetransfer-transfering__amount {
+    display: inline-block;
+    font-family: 'Roboto', sans-serif;
+    font-size: em(40);
+    vertical-align: bottom;
+}
+
+.wordpress-wetransfer-transfering__symbol {
+    display: inline-block;
+    font-family: 'Roboto', sans-serif;
+    font-size: em(20);
+    vertical-align: bottom;
+}
+
+
+.wordpress-wetransfer-success {
+    padding: em(20);
+    text-align: center;
+}
+
+.wordpress-wetransfer-success__message {
+    display: block;
+    font-family: 'Roboto', sans-serif;
+    font-size: em(40);
+}
+
+.wordpress-wetransfer-success__url {
+    display: block;
+    font-family: 'Roboto', sans-serif;
+}
+
+.wordpress-wetransfer-failed {
+    padding: em(20);
+    text-align: center;
+    background-color: #eb5757;
+}
+
+.wordpress-wetransfer-failed__message {
+    font-family: 'Roboto', sans-serif;
+    font-size: em(30);
+    color: #fff;
+}

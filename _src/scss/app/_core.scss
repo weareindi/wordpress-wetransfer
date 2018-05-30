@@ -1,0 +1,53 @@
+// Reset
+
+.wordpress-wetransfer,
+.wordpress-wetransfer * {
+    font-size: 16px;
+}
+
+
+// Layout
+
+.wordpress-wetransfer {}
+
+.wordpress-wetransfer__container {
+    background-color: #eb5757;
+}
+
+.wordpress-wetransfer__header {
+    padding: em(10);
+}
+
+.wordpress-wetransfer__heading {}
+
+.wordpress-wetransfer__heading-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 0;
+    height: 0;
+    white-space: nowrap;
+    visibility: hidden;
+}
+
+.wordpress-wetransfer__heading-logo {
+    display: block;
+    width: 64px;
+    height: 40px;
+
+    @include pngsvg('../images/icon--we.png', '../images/icon--we.svg');
+}
+
+.wordpress-wetransfer__content {
+    padding: em(20);
+}
+
+.wordpress-wetransfer__notice {
+    display: inline-block;
+
+    font-weight: 600;
+    text-align: center;
+
+    color: #fff;
+}

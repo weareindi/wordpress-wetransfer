@@ -1,0 +1,4 @@
+@mixin pngsvg($pngPath, $svgPath) {
+    background-image: url($pngPath);
+    background-image: linear-gradient(transparent, transparent), url($svgPath);
+}

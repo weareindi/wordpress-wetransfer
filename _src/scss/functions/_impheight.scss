@@ -1,0 +1,3 @@
+@function impheight($width, $height) {
+    @return ( $height / $width ) * 100%;
+}

@@ -1,0 +1,23 @@
+{
+    "presets": [
+        [
+            "env", {
+                "targets": {
+                    "browsers": [
+                        "last 10 versions",
+                        "ie >= 9"
+                    ]
+                }
+            }
+        ]
+    ],
+    "plugins": [
+        ["babel-plugin-transform-html-import-to-string"],
+        [
+            "transform-runtime", {
+                "polyfill": true,
+                "regenerator": true
+            }
+        ]
+    ]
+}
