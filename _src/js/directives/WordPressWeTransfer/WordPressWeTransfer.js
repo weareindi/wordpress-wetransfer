@@ -4,6 +4,7 @@ import SuccessTemplate from '../../templates/SuccessTemplate.html';
 import FailedTemplate from '../../templates/FailedTemplate.html';
 import TransferringTemplate from '../../templates/TransferringTemplate.html';
 
+import AjaxService from '../../Services/AjaxService/AjaxService';
 import ErrorService from '../../Services/ErrorService/ErrorService';
 import ValidationService from '../../Services/ValidationService/ValidationService';
 
@@ -243,85 +244,37 @@ export class WordPressWeTransfer {
     }
 
     async getToken() {
-        // Prepare data
-        const data = {
-            action: 'wordpresswetransfer--auth'
+        const ajaxSettings = {
+            data: {
+                action: 'wordpresswetransfer--auth'
+            }
         };
 
-        // Prepare URL
-        const url = wordpresswetransfer.ajaxUrl;
+        const ajax = new AjaxService(ajaxSettings);
 
-        // Prepare Headers
-        const headers = new Headers({
-            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-        });
-
-        // Prepare Headers
-        const options = {
-            method: 'POST',
-            headers: headers,
-            body: qs.stringify(data)
-        };
-
-        // Prepare Request
-        const request = new Request(url, options);
-
-        // Fetch
-        return await fetch(request)
-            .then((response) => {
-                this.error.response(response);
-
-                return response.json();
-            })
+        await ajax.post()
             .then((response) => {
                 this.error.success(response);
 
                 return this.token = response.token;
-            })
-            .catch((error) => {
-                throw new Error(error.message);
             });
     }
 
     async createTransfer() {
-        // Prepare data
-        const data = {
-            action: 'wordpresswetransfer--transfer',
-            token: this.token
+        const ajaxSettings = {
+            data: {
+                action: 'wordpresswetransfer--transfer',
+                token: this.token
+            }
         };
 
-        // Prepare URL
-        const url = wordpresswetransfer.ajaxUrl;
+        const ajax = new AjaxService(ajaxSettings);
 
-        // Prepare Headers
-        const headers = new Headers({
-            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-        });
+        await ajax.post()
+            .then((transferObject) => {
+                this.error.transfer(transferObject);
 
-        // Prepare Headers
-        const options = {
-            method: 'POST',
-            headers: headers,
-            body: qs.stringify(data)
-        };
-
-        // Prepare Request
-        const request = new Request(url, options);
-
-        // Fetch
-        return await fetch(request)
-            .then((response) => {
-                this.error.response(response);
-
-                return response.json();
-            })
-            .then((transfer) => {
-                this.error.transfer(transfer);
-
-                return this.transfer = transfer;
-            })
-            .catch((error) => {
-                throw new Error(error.message);
+                return this.transfer = transferObject;
             });
     }
 
@@ -331,39 +284,18 @@ export class WordPressWeTransfer {
             transferItems.push(item.wetransfer.item);
         });
 
-        // Prepare data
-        const data = {
-            action: 'wordpresswetransfer--items',
-            token: this.token,
-            transferId: this.transfer.id,
-            items: transferItems
+        const ajaxSettings = {
+            data: {
+                action: 'wordpresswetransfer--items',
+                token: this.token,
+                transferId: this.transfer.id,
+                items: transferItems
+            }
         };
 
-        // Prepare URL
-        const url = wordpresswetransfer.ajaxUrl;
+        const ajax = new AjaxService(ajaxSettings);
 
-        // Prepare Headers
-        const headers = new Headers({
-            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-        });
-
-        // Prepare Headers
-        const options = {
-            method: 'POST',
-            headers: headers,
-            body: qs.stringify(data)
-        };
-
-        // Prepare Request
-        const request = new Request(url, options);
-
-        // Fetch
-        return await fetch(request)
-            .then((response) => {
-                this.error.response(response);
-
-                return response.json();
-            })
+        await ajax.post()
             .then((transferItems) => {
                 this.error.transferItems(transferItems);
 
@@ -374,9 +306,6 @@ export class WordPressWeTransfer {
 
                     return this.items[index].wetransfer.transfer = transferItem;
                 });
-            })
-            .catch((error) => {
-                throw new Error(error.message);
             });
     }
 
@@ -397,9 +326,6 @@ export class WordPressWeTransfer {
 
                 // Get upload Data
                 const uploadData = await this.getUploadData(item.wetransfer.transfer, partNumber, item.wetransfer.transfer.meta.multipart_upload_id);
-
-                // Validate data
-                await this.error.uploadData(uploadData);
 
                 // Upload Chunk
                 await this.uploadChunk(chunk, uploadData);
@@ -445,47 +371,23 @@ export class WordPressWeTransfer {
         this.error.partNumber(partNumber);
         this.error.multipartUploadId(partNumber);
 
-        // Prepare item data
-        const data = {
-            action: 'wordpresswetransfer--url',
-            token: this.token,
-            transferId: transfer.id,
-            partNumber: partNumber,
-            multipartUploadId: multipartUploadId
+        const ajaxSettings = {
+            data: {
+                action: 'wordpresswetransfer--url',
+                token: this.token,
+                transferId: transfer.id,
+                partNumber: partNumber,
+                multipartUploadId: multipartUploadId
+            }
         };
 
-        // Prepare URL
-        const url = wordpresswetransfer.ajaxUrl;
+        const ajax = new AjaxService(ajaxSettings);
 
-        // Prepare Headers
-        const headers = new Headers({
-            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-        });
-
-        // Prepare Headers
-        const options = {
-            method: 'POST',
-            headers: headers,
-            body: qs.stringify(data)
-        };
-
-        // Prepare Request
-        const request = new Request(url, options);
-
-        // Fetch
-        return await fetch(request)
-            .then((response) => {
-                this.error.response(response);
-
-                return response.json();
-            })
+        return await ajax.post()
             .then((uploadData) => {
                 this.error.uploadData(uploadData);
 
                 return uploadData;
-            })
-            .catch((error) => {
-                throw new Error(error.message);
             });
     }
 
@@ -493,22 +395,16 @@ export class WordPressWeTransfer {
         this.error.chunk(chunk);
         this.error.uploadData(uploadData);
 
-        // Prepare Headers
-        const options = {
-            method: 'PUT',
-            body: chunk
+        const ajaxSettings = {
+            url: uploadData.upload_url,
+            data: chunk
         };
 
-        // Prepare Request
-        const request = new Request(uploadData.upload_url, options);
+        const ajax = new AjaxService(ajaxSettings);
 
-        return await fetch(request)
+        return await ajax.put()
             .then((response) => {
-                this.error.response(response);
-                return true;
-            })
-            .catch((error) => {
-                throw new Error(error.message);
+                return response;
             });
     }
 
@@ -516,46 +412,24 @@ export class WordPressWeTransfer {
         this.error.token(this.token);
         this.error.transfer(transfer);
 
-        // Prepare item data
-        const data = {
-            action: 'wordpresswetransfer--complete-transfer',
-            token: this.token,
-            transferId: transfer.id
+        const ajaxSettings = {
+            data: {
+                action: 'wordpresswetransfer--complete-transfer',
+                token: this.token,
+                transferId: transfer.id
+            }
         };
 
-        // Prepare URL
-        const url = wordpresswetransfer.ajaxUrl;
+        const ajax = new AjaxService(ajaxSettings);
 
-        // Prepare Headers
-        const headers = new Headers({
-            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-        });
-
-        // Prepare Headers
-        const options = {
-            method: 'POST',
-            headers: headers,
-            body: qs.stringify(data)
-        };
-
-        // Prepare Request
-        const request = new Request(url, options);
-
-        return await fetch(request)
-            .then((response) => {
-                this.error.response(response);
-
-                return response.json();
-            })
+        await ajax.post()
             .then((response) => {
                 if (!this.validate.transfer(response)) {
                     this.updateContent(FailedTemplate);
+                    return false;
                 }
 
                 return true;
-            })
-            .catch((error) => {
-                throw new Error(error.message);
             });
     }
 
