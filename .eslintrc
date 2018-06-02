@@ -5,6 +5,7 @@
     },
     "extends": "eslint-config-google",
     "parserOptions": {
+        "ecmaVersion": "2017",
         "sourceType": "module"
     },
     "rules": {
@@ -14,7 +15,7 @@
         ],
         "linebreak-style": [
             "error",
-            "unix"
+            "windows"
         ],
         "quotes": [
             "error",
