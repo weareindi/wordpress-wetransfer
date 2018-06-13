@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:500,700');
 
 // Layout
-
 .wordpress-wetransfer__container {
     background-color: #000;
 }
@@ -13,7 +12,6 @@
 }
 
 // Form
-
 .wordpress-wetransfer-form {}
 
 .wordpress-wetransfer-form__set {
@@ -47,6 +45,9 @@
 
     .wordpress-wetransfer-form__label {
         margin: 0 0 0 0.5em;
+
+
+        color: #111;
     }
 
     &:hover {
@@ -84,7 +85,7 @@
 .wordpress-wetransfer-form__button--submit {
     display: block;
 
-    min-width: em(200);
+    min-width: em(160);
 
     padding: 1em 2em;
 
@@ -122,6 +123,8 @@
     float: left;
 
     font-family: 'Roboto', sans-serif;
+
+    color: #111;
 }
 
 .wordpress-wetransfer-item__button {
@@ -158,13 +161,18 @@
     font-family: 'Roboto', sans-serif;
     font-size: em(40);
     vertical-align: bottom;
+
+    color: #111;
 }
 
 .wordpress-wetransfer-transfering__symbol {
     display: inline-block;
     font-family: 'Roboto', sans-serif;
     font-size: em(20);
+    line-height: 1.2em;
     vertical-align: bottom;
+
+    color: #111;
 }
 
 
@@ -177,11 +185,18 @@
     display: block;
     font-family: 'Roboto', sans-serif;
     font-size: em(40);
+    line-height: 1.2em;
+
+    color: #111;
 }
 
 .wordpress-wetransfer-success__url {
     display: block;
     font-family: 'Roboto', sans-serif;
+
+    a {
+        color: #333;
+    }
 }
 
 .wordpress-wetransfer-failed {
