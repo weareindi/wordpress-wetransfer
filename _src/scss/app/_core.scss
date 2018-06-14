@@ -1,6 +1,6 @@
 // Reset
-.wordpress-wetransfer.wordpress-wetransfer,
-.wordpress-wetransfer.wordpress-wetransfer * {
+.ozpital-wpwetransfer,
+.ozpital-wpwetransfer * {
     position: static;
     display: block;
     margin: 0;
@@ -19,19 +19,19 @@
 
 
 // Layout
-.wordpress-wetransfer {}
+.ozpital-wpwetransfer {}
 
-.wordpress-wetransfer__container {
+.ozpital-wpwetransfer__container {
     background-color: #eb5757;
 }
 
-.wordpress-wetransfer__header {
+.ozpital-wpwetransfer__header {
     padding: em(10);
 }
 
-.wordpress-wetransfer__heading {}
+.ozpital-wpwetransfer__heading {}
 
-.wordpress-wetransfer__heading-label {
+.ozpital-wpwetransfer__heading-label {
     position: absolute;
     top: 0;
     left: 0;
@@ -42,7 +42,7 @@
     visibility: hidden;
 }
 
-.wordpress-wetransfer__heading-logo {
+.ozpital-wpwetransfer__heading-logo {
     display: block;
     width: 64px;
     height: 40px;
@@ -50,11 +50,11 @@
     @include pngsvg('../images/icon--we.png', '../images/icon--we.svg');
 }
 
-.wordpress-wetransfer__content {
+.ozpital-wpwetransfer__content {
     padding: em(20);
 }
 
-.wordpress-wetransfer__notice {
+.ozpital-wpwetransfer__notice {
     display: inline-block;
 
     font-weight: 600;

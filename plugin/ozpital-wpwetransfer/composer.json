@@ -1,12 +1,12 @@
 {
-    "name": "ozpital/wordpress-wetransfer",
+    "name": "ozpital/ozpital-wpwetransfer",
     "description": "Upload to WeTransfer without leaving wordpress",
     "keywords": ["wetransfer", "wordpress", "plugin"],
     "type": "wordpress-plugin",
     "require": {
         "composer/installers": "^1.5"
     },
-    "license": "MIT",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Laurence Archer",

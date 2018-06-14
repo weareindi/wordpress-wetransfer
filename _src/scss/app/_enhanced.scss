@@ -1,31 +1,31 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:500,700');
 
 // Layout
-.wordpress-wetransfer__container {
+.ozpital-wpwetransfer__container {
     background-color: #000;
 }
 
-.wordpress-wetransfer__content {
+.ozpital-wpwetransfer__content {
     padding: 0;
 
     background-color: #f5f5f5;
 }
 
 // Form
-.wordpress-wetransfer-form {}
+.ozpital-wpwetransfer-form {}
 
-.wordpress-wetransfer-form__set {
+.ozpital-wpwetransfer-form__set {
     display: block;
 
     padding: em(20);
 }
 
-.wordpress-wetransfer-form__icon {
+.ozpital-wpwetransfer-form__icon {
     display: inline-block;
     vertical-align: middle;
 }
 
-.wordpress-wetransfer-form__icon--add {
+.ozpital-wpwetransfer-form__icon--add {
     width: em(38);
     height: em(38);
 
@@ -38,12 +38,12 @@
     transition: transform 250ms;
 }
 
-.wordpress-wetransfer-form__set--file {
+.ozpital-wpwetransfer-form__set--file {
     background-color: #fff;
 
     cursor: pointer;
 
-    .wordpress-wetransfer-form__label {
+    .ozpital-wpwetransfer-form__label {
         margin: 0 0 0 0.5em;
 
 
@@ -51,13 +51,13 @@
     }
 
     &:hover {
-        .wordpress-wetransfer-form__icon--add {
+        .ozpital-wpwetransfer-form__icon--add {
             transform: scale(1) rotate(180deg);
         }
     }
 }
 
-.wordpress-wetransfer-form__label {
+.ozpital-wpwetransfer-form__label {
     display: inline-block;
 
     font-family: 'Roboto', sans-serif;
@@ -68,21 +68,21 @@
     user-select: none;
 }
 
-.wordpress-wetransfer-form__element {}
+.ozpital-wpwetransfer-form__element {}
 
-.wordpress-wetransfer-form__element--file {
+.ozpital-wpwetransfer-form__element--file {
     display: none;
 }
 
-.wordpress-wetransfer-form__input {}
+.ozpital-wpwetransfer-form__input {}
 
-.wordpress-wetransfer-form__input--file {}
+.ozpital-wpwetransfer-form__input--file {}
 
-.wordpress-wetransfer-form__button {
+.ozpital-wpwetransfer-form__button {
     margin: 0 auto;
 }
 
-.wordpress-wetransfer-form__button--submit {
+.ozpital-wpwetransfer-form__button--submit {
     display: block;
 
     min-width: em(160);
@@ -106,11 +106,11 @@
     }
 }
 
-.wordpress-wetransfer-form__footer {
+.ozpital-wpwetransfer-form__footer {
     padding: em(20);
 }
 
-.wordpress-wetransfer-item {
+.ozpital-wpwetransfer-item {
     overflow: hidden;
 
     margin: em(1) 0 0;
@@ -119,7 +119,7 @@
     background-color: #fff;
 }
 
-.wordpress-wetransfer-item__name {
+.ozpital-wpwetransfer-item__name {
     float: left;
 
     font-family: 'Roboto', sans-serif;
@@ -127,7 +127,7 @@
     color: #111;
 }
 
-.wordpress-wetransfer-item__button {
+.ozpital-wpwetransfer-item__button {
     padding: 0;
     border: 0;
     background-color: transparent;
@@ -136,10 +136,10 @@
     outline: none;
 }
 
-.wordpress-wetransfer-item__button--delete {
+.ozpital-wpwetransfer-item__button--delete {
     float: right;
 
-    .wordpress-wetransfer-item__label {
+    .ozpital-wpwetransfer-item__label {
         font-family: 'Roboto', sans-serif;
         font-size: 0.8em;
         font-weight: 500;
@@ -148,15 +148,15 @@
     }
 }
 
-.wordpress-wetransfer-transfering {
+.ozpital-wpwetransfer-transfering {
     padding: em(20);
 }
 
-.wordpress-wetransfer-transfering__percentage {
+.ozpital-wpwetransfer-transfering__percentage {
     text-align: center;
 }
 
-.wordpress-wetransfer-transfering__amount {
+.ozpital-wpwetransfer-transfering__amount {
     display: inline-block;
     font-family: 'Roboto', sans-serif;
     font-size: em(40);
@@ -165,7 +165,7 @@
     color: #111;
 }
 
-.wordpress-wetransfer-transfering__symbol {
+.ozpital-wpwetransfer-transfering__symbol {
     display: inline-block;
     font-family: 'Roboto', sans-serif;
     font-size: em(20);
@@ -176,12 +176,12 @@
 }
 
 
-.wordpress-wetransfer-success {
+.ozpital-wpwetransfer-success {
     padding: em(20);
     text-align: center;
 }
 
-.wordpress-wetransfer-success__message {
+.ozpital-wpwetransfer-success__message {
     display: block;
     font-family: 'Roboto', sans-serif;
     font-size: em(40);
@@ -190,7 +190,7 @@
     color: #111;
 }
 
-.wordpress-wetransfer-success__url {
+.ozpital-wpwetransfer-success__url {
     display: block;
     font-family: 'Roboto', sans-serif;
 
@@ -199,13 +199,13 @@
     }
 }
 
-.wordpress-wetransfer-failed {
+.ozpital-wpwetransfer-failed {
     padding: em(20);
     text-align: center;
     background-color: #eb5757;
 }
 
-.wordpress-wetransfer-failed__message {
+.ozpital-wpwetransfer-failed__message {
     font-family: 'Roboto', sans-serif;
     font-size: em(30);
     color: #fff;

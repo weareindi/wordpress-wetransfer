@@ -1,24 +1,24 @@
 <?php
 
 /*
-Plugin Name: WordPress WeTransfer
+Plugin Name: Ozpital WPWeTransfer
 Description: Upload to WeTransfer without leaving wordpress
-Version: 0.0.1
+Version: 0.0.5
 Author: Laurence Archer
 Author URI: https://ozpital.com
 */
 
 require_once('autoload.php');
 
-use WeTransfer\Core\Assets;
-use WeTransfer\Core\Menu;
-use WeTransfer\Core\Option;
-use WeTransfer\Core\Shortcode;
-use WeTransfer\Services\AjaxRouteService as Route;
+use Ozpital\WPWeTransfer\Core\OWPWT_Assets as Assets;
+use Ozpital\WPWeTransfer\Core\OWPWT_Menu as Menu;
+use Ozpital\WPWeTransfer\Core\OWPWT_Option as Option;
+use Ozpital\WPWeTransfer\Core\OWPWT_Shortcode as Shortcode;
+use Ozpital\WPWeTransfer\Services\OWPWT_AjaxRouteService as Route;
 
 // Define plugin root
-define('WORDPRESS_WETRANSFER_DIR', __DIR__ . DIRECTORY_SEPARATOR);
-define('WORDPRESS_WETRANSFER_URL', plugin_dir_url(__FILE__));
+define('OWPWT_DIR', __DIR__ . DIRECTORY_SEPARATOR);
+define('OWPWT_URL', plugin_dir_url(__FILE__));
 
 // Register Options
 Option::registerApiKey();

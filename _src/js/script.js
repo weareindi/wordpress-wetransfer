@@ -1,7 +1,7 @@
 // Directives
-import {WordPressWeTransfer} from './directives/WordPressWeTransfer/WordPressWeTransfer';
+import {WPWeTransfer} from './directives/WPWeTransfer/WPWeTransfer';
 
 // Run
-Array.forEach(document.querySelectorAll('[wordpress-wetransfer]'), (surface) => {
-    new WordPressWeTransfer(surface);
+Array.forEach(document.querySelectorAll('[ozpital-wpwetransfer]'), (surface) => {
+    new WPWeTransfer(surface);
 });

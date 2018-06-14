@@ -5,7 +5,7 @@
  */
 spl_autoload_register(function($class, $dir = null) {
     // project-specific namespace prefix
-    $prefix = 'WeTransfer\\';
+    $prefix = 'Ozpital\\WPWeTransfer\\';
 
     // base directory for the namespace prefix
     $base_dir = __DIR__ . '/app/';

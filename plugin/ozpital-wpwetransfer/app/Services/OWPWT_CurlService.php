@@ -1,12 +1,26 @@
 <?php
 
-namespace WeTransfer\Services;
+namespace Ozpital\WPWeTransfer\Services;
 
-use WeTransfer\Services\ErrorService as Error;
+use Ozpital\WPWeTransfer\Services\OWPWT_ErrorService as Error;
 
-class CurlService {
+/**
+ * Curse Service
+ */
+class OWPWT_CurlService {
+    /**
+     * Prepare default url prefix
+     */
     public static $url = 'https://dev.wetransfer.com/v1/';
 
+    /**
+     * Fetch reponse from url
+     * @param  String $method  Post/Pull/Get
+     * @param  String $url     URL to fetch from
+     * @param  array  $headers Desired headers to send with request
+     * @param  array  $data    Desired data to send with request
+     * @return String          Any response from URL
+     */
     public static function fetch(String $method, String $url, Array $headers = [], Array $data = []) {
         Error::apiKey();
 
@@ -42,6 +56,9 @@ class CurlService {
         return $curlReponse;
     }
 
+    /**
+     * Prepare WeTransfer AUTH request
+     */
     public static function auth() {
         Error::post();
 
@@ -58,6 +75,9 @@ class CurlService {
         die();
     }
 
+    /**
+     * Prepare WeTransfer TRANSFER request
+     */
     public static function transfer() {
         Error::post();
         Error::token();
@@ -76,6 +96,9 @@ class CurlService {
         die();
     }
 
+    /**
+     * Prepare WeTransfer ITEMS request
+     */
     public static function items() {
         Error::post();
         Error::token();
@@ -96,6 +119,9 @@ class CurlService {
         die();
     }
 
+    /**
+     * Prepare WeTransfer UPLOAD URL request
+     */
     public static function url() {
         Error::post();
         Error::token();
@@ -113,6 +139,9 @@ class CurlService {
         die();
     }
 
+    /**
+     * Prepare WeTransfer TRANSFER COMPLETE request
+     */
     public static function completeTransfer() {
         Error::post();
         Error::token();

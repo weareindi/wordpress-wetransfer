@@ -1,25 +1,23 @@
 <?php
 
-namespace WeTransfer\Core;
+namespace Ozpital\WPWeTransfer\Core;
 
-use WeTransfer\Core\Plugin;
+use Ozpital\WPWeTransfer\Core\OWPWT_Plugin as Plugin;
 
 /**
- *
+ * Option
  */
-class Option {
-
+class OWPWT_Option {
     /**
-     * [public description]
-     * @var [type]
+     * Prepare $options variable to be populated
      */
     public static $options;
 
     /**
-     * [add description]
-     * @param String $name  [description]
-     * @param String $label [description]
-     * @param String $type  [description]
+     * Register an option
+     * @param  String $name  Name of option
+     * @param  String $label Label of option to display
+     * @param  String $type  Type of input field to use
      */
     public static function register(String $name, String $label, String $type) {
         if (!is_array(self::$options)) {
@@ -36,9 +34,7 @@ class Option {
     }
 
     /**
-     * [registerSetting description]
-     * @param  [type] $name [description]
-     * @return [type]       [description]
+     * Regiser and assign options name to plugin
      */
     public static function registerSetting($name) {
         add_action('admin_init', function() use ($name) {
@@ -47,16 +43,14 @@ class Option {
     }
 
     /**
-     * [getAll description]
-     * @return [type] [description]
+     * Get all prepared options
      */
     public static function getAll() {
         return self::$options;
     }
 
     /**
-     * [registerApiKey description]
-     * @return [type] [description]
+     * Register API Key Option
      */
     public static function registerApiKey() {
         self::register('api-key', 'WeTransfer API Key', 'text');

@@ -1,17 +1,15 @@
 <?php
 
-namespace WeTransfer\Core;
+namespace Ozpital\WPWeTransfer\Core;
 
-use WeTransfer\Core\Plugin;
+use Ozpital\WPWeTransfer\Core\OWPWT_Plugin as Plugin;
 
 /**
- *
+ * Assets
  */
-class Assets {
-
+class OWPWT_Assets {
     /**
-     * [registerStyles description]
-     * @return [type] [description]
+     * Enqueue plugin styles
      */
     public static function styles() {
         add_action('wp_enqueue_scripts', function() {
@@ -19,13 +17,12 @@ class Assets {
             $pathCss = 'assets/css/core.css';
 
             // Enqueue style
-            wp_enqueue_style(Plugin::getSlug() . '-css', WORDPRESS_WETRANSFER_URL . $pathCss, false, filemtime(WORDPRESS_WETRANSFER_DIR . $pathCss));
+            wp_enqueue_style(Plugin::getSlug() . '-css', OWPWT_URL . $pathCss, false, filemtime(OWPWT_DIR . $pathCss));
         });
     }
 
     /**
-     * [registerScripts description]
-     * @return [type] [description]
+     * Enqueue and localise scripts
      */
     public static function scripts() {
         add_action('wp_enqueue_scripts', function() {
@@ -33,9 +30,9 @@ class Assets {
             $pathJs = 'assets/js/script.js';
 
             // Enqueue style
-            wp_enqueue_script(Plugin::getSlug() . '-js', WORDPRESS_WETRANSFER_URL . $pathJs, null, filemtime(WORDPRESS_WETRANSFER_DIR . $pathJs), true);
+            wp_enqueue_script(Plugin::getSlug() . '-js', OWPWT_URL . $pathJs, null, filemtime(OWPWT_DIR . $pathJs), true);
             wp_localize_script(Plugin::getSlug() . '-js', Plugin::getShortname(), [
-                'pluginDir' => WORDPRESS_WETRANSFER_URL,
+                'pluginDir' => OWPWT_URL,
                 'ajaxUrl' => admin_url('admin-ajax.php')
             ]);
         });
