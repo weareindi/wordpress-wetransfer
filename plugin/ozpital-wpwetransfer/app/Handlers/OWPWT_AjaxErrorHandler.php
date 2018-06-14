@@ -1,8 +1,11 @@
 <?php
 
-namespace WeTransfer\Handlers;
+namespace Ozpital\WPWeTransfer\Handlers;
 
-class AjaxErrorHandler {
+/**
+ * AJAX Error Handler
+ */
+class OWPWT_AjaxErrorHandler {
     public static function echo(String $errorMessage) {
         echo json_encode([
             'success' => false,

@@ -6,12 +6,12 @@ export default class ErrorService {
     }
 
     variablesAvailable() {
-        if (typeof wordpresswetransfer === 'undefined') {
-            throw new Error(`Required variable ${'wordpresswetransfer'} is not available`);
+        if (typeof owpwt === 'undefined') {
+            throw new Error(`Required variable ${'owpwt'} is not available`);
         }
 
-        if (!wordpresswetransfer.pluginDir) {
-            throw new Error(`Required variable ${'wordpresswetransfer.pluginDir'} is not available`);
+        if (!owpwt.pluginDir) {
+            throw new Error(`Required variable ${'owpwt.pluginDir'} is not available`);
         }
     }
 

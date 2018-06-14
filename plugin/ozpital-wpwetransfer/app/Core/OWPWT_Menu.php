@@ -1,18 +1,16 @@
 <?php
 
-namespace WeTransfer\Core;
+namespace Ozpital\WPWeTransfer\Core;
 
-use WeTransfer\Core\Plugin;
-use WeTransfer\Core\Option;
+use Ozpital\WPWeTransfer\Core\OWPWT_Plugin as Plugin;
+use Ozpital\WPWeTransfer\Core\OWPWT_Option as Option;
 
 /**
- *
+ * Menu
  */
-class Menu {
-
+class OWPWT_Menu {
     /**
-     * [register description]
-     * @return [type] [description]
+     * Regiser Admin Menu
      */
     public static function register() {
         add_action('admin_menu', function() {
@@ -29,8 +27,7 @@ class Menu {
     }
 
     /**
-     * [page description]
-     * @return [type] [description]
+     * Admin page HTML
      */
     public static function html() {
         ?>

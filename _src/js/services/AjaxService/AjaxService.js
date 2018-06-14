@@ -13,7 +13,7 @@ export default class AjaxService {
     constructor(settings) {
         // Default Settings
         this.defaultSettings = {
-            url: wordpresswetransfer.ajaxUrl,
+            url: owpwt.ajaxUrl,
             data: {},
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'

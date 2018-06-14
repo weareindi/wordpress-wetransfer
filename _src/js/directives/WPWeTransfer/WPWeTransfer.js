@@ -11,7 +11,7 @@ import ValidationService from '../../Services/ValidationService/ValidationServic
 import qs from 'qs';
 import closest from 'closest';
 
-export class WordPressWeTransfer {
+export class WPWeTransfer {
     constructor(surface) {
         this.error = new ErrorService();
         this.validate = new ValidationService();
@@ -33,12 +33,12 @@ export class WordPressWeTransfer {
     prepareElements() {
         this.elements = {};
         this.elements.surface = this.surface;
-        this.elements.content = this.surface.querySelector('.wordpress-wetransfer__content');
+        this.elements.content = this.surface.querySelector('.ozpital-wpwetransfer__content');
     }
 
     async initalise() {
         try {
-            await this.elements.surface.classList.add('wordpress-wetransfer-enhanced');
+            await this.elements.surface.classList.add('ozpital-wpwetransfer-enhanced');
             await this.loadStylesheet();
             await this.replaceContent();
             await this.registerForm();
@@ -54,7 +54,7 @@ export class WordPressWeTransfer {
         const element = document.createElement('link');
         element.rel = 'stylesheet';
         element.type = 'text/css';
-        element.href = wordpresswetransfer.pluginDir + '/assets/css/enhanced.css';
+        element.href = owpwt.pluginDir + '/assets/css/enhanced.css';
         document.body.appendChild(element);
     }
 
@@ -63,14 +63,14 @@ export class WordPressWeTransfer {
     }
 
     registerForm() {
-        this.elements.form = this.elements.surface.querySelector('.wordpress-wetransfer-form');
-        this.elements.input = this.elements.form.querySelector('.wordpress-wetransfer-form__input--file');
-        this.elements.list = this.elements.form.querySelector('.wordpress-wetransfer-form__list');
-        this.elements.submit = this.elements.form.querySelector('.wordpress-wetransfer-form__button--submit');
+        this.elements.form = this.elements.surface.querySelector('.ozpital-wpwetransfer-form');
+        this.elements.input = this.elements.form.querySelector('.ozpital-wpwetransfer-form__input--file');
+        this.elements.list = this.elements.form.querySelector('.ozpital-wpwetransfer-form__list');
+        this.elements.submit = this.elements.form.querySelector('.ozpital-wpwetransfer-form__button--submit');
     }
 
     fireSuccessEvent() {
-        const event = new CustomEvent('wordpress-wetransfer-success', {
+        const event = new CustomEvent('ozpital-wpwetransfer-success', {
             detail: {
                 id: this.transfer.id,
                 url: this.transfer.shortened_url
@@ -119,11 +119,11 @@ export class WordPressWeTransfer {
             event.stopPropagation();
             event.preventDefault();
 
-            if (!event.target.classList.contains('wordpress-wetransfer-item__button--delete') && !event.target.parentElement.classList.contains('wordpress-wetransfer-item__button--delete')) {
+            if (!event.target.classList.contains('ozpital-wpwetransfer-item__button--delete') && !event.target.parentElement.classList.contains('ozpital-wpwetransfer-item__button--delete')) {
                 return false;
             }
 
-            this.removeFile(closest(event.target, '.wordpress-wetransfer-item').getAttribute('wordpress-wetransfer-item'));
+            this.removeFile(closest(event.target, '.ozpital-wpwetransfer-item').getAttribute('ozpital-wpwetransfer-item'));
             this.disableSubmit();
             this.processFiles();
             this.populateFilesList();
@@ -184,7 +184,7 @@ export class WordPressWeTransfer {
 
     async updateUploadProgress(totalUploadedBytes) {
         let progress = (totalUploadedBytes / this.totalUploadableBytes) * 100;
-        await (document.querySelector('.wordpress-wetransfer-transfering__amount').innerHTML = Math.round(progress));
+        await (document.querySelector('.ozpital-wpwetransfer-transfering__amount').innerHTML = Math.round(progress));
     }
 
     async updateContent(template, replacements) {
@@ -236,7 +236,7 @@ export class WordPressWeTransfer {
                         filename: fileinfo.name,
                         filesize: fileinfo.size,
                         content_identifier: 'file',
-                        local_identifier: 'wordpresswetransfer--' + index
+                        local_identifier: 'owpwt--' + index
                     }
                 }
             });
@@ -246,7 +246,7 @@ export class WordPressWeTransfer {
     async getToken() {
         const ajaxSettings = {
             data: {
-                action: 'wordpresswetransfer--auth'
+                action: 'owpwt--auth'
             }
         };
 
@@ -263,7 +263,7 @@ export class WordPressWeTransfer {
     async createTransfer() {
         const ajaxSettings = {
             data: {
-                action: 'wordpresswetransfer--transfer',
+                action: 'owpwt--transfer',
                 token: this.token
             }
         };
@@ -286,7 +286,7 @@ export class WordPressWeTransfer {
 
         const ajaxSettings = {
             data: {
-                action: 'wordpresswetransfer--items',
+                action: 'owpwt--items',
                 token: this.token,
                 transferId: this.transfer.id,
                 items: transferItems
@@ -373,7 +373,7 @@ export class WordPressWeTransfer {
 
         const ajaxSettings = {
             data: {
-                action: 'wordpresswetransfer--url',
+                action: 'owpwt--url',
                 token: this.token,
                 transferId: transfer.id,
                 partNumber: partNumber,
@@ -414,7 +414,7 @@ export class WordPressWeTransfer {
 
         const ajaxSettings = {
             data: {
-                action: 'wordpresswetransfer--complete-transfer',
+                action: 'owpwt--complete-transfer',
                 token: this.token,
                 transferId: transfer.id
             }

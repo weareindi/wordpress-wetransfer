@@ -1,11 +1,14 @@
 <?php
 
-namespace WeTransfer\Services;
+namespace Ozpital\WPWeTransfer\Services;
 
-use WeTransfer\Core\Plugin;
-use WeTransfer\Handlers\AjaxErrorHandler;
+use Ozpital\WPWeTransfer\Core\OWPWT_Plugin as Plugin;
+use Ozpital\WPWeTransfer\Handlers\OWPWT_AjaxErrorHandler as AjaxErrorHandler;
 
-class ErrorService {
+/**
+ * Error Service
+ */
+class OWPWT_ErrorService {
     public static function post() {
         if (!isset($_POST)) {
             AjaxErrorHandler::echo('No post data');
