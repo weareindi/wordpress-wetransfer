@@ -3,7 +3,7 @@
 /*
 Plugin Name: Ozpital WPWeTransfer
 Description: Upload to WeTransfer without leaving wordpress
-Version: 0.0.5
+Version: 0.0.6
 Author: Laurence Archer
 Author URI: https://ozpital.com
 */
