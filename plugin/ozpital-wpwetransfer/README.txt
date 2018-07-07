@@ -3,9 +3,9 @@ Contributors: ozpital
 Donate link: https://www.paypal.me/ozpital
 Tags: wetransfer, transfer, file upload, embed
 Requires at least: 4.9.6
-Tested up to: 4.9.6
-Stable tag: 0.0.6
-Requires PHP: 5.4
+Tested up to: 4.9.7
+Stable tag: 0.0.7
+Requires PHP: 7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,9 @@ No longer do you need to send your users away from your site. Let them transfer 
 5. Upload successful
 
 == Changelog ==
+
+= 0.0.7 =
+* Change minimum platform requirements
 
 = 0.0.6 =
 * Initial upload to WordPress Plugin Directory
