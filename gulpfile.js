@@ -16,7 +16,7 @@ const plugins = {
     log: require('fancy-log'),
     postcss: require('gulp-postcss'),
     sass: require('gulp-sass'),
-    uglify: require('gulp-uglify'),
+    uglify: require('gulp-uglify-es').default,
     vinylBuffer: require('vinyl-buffer'),
     vinylSource: require('vinyl-source-stream')
 };

@@ -2,6 +2,6 @@
 import {WPWeTransfer} from './directives/WPWeTransfer/WPWeTransfer';
 
 // Run
-Array.forEach(document.querySelectorAll('[ozpital-wpwetransfer]'), (surface) => {
-    new WPWeTransfer(surface);
-});
+for (var i = 0; i < document.querySelectorAll('[ozpital-wpwetransfer]').length; i++) {
+    new WPWeTransfer(document.querySelectorAll('[ozpital-wpwetransfer]')[i]);
+}

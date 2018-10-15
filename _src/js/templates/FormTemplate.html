@@ -1,17 +1,27 @@
 <form method="post" class="ozpital-wpwetransfer-form" enctype="multipart/form-data">
+    <div class="ozpital-wpwetransfer-form__list"></div>
+
     <label class="ozpital-wpwetransfer-form__set ozpital-wpwetransfer-form__set--file">
-        <span class="ozpital-wpwetransfer-form__icon ozpital-wpwetransfer-form__icon--add"></span>
-        <span class="ozpital-wpwetransfer-form__label">Add your files</span>
+        <span class="ozpital-wpwetransfer-form__icon ozpital-wpwetransfer-form__icon--add">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 5H0.5C0.2235 5 0 5.226 0 5.505V6.495C0 6.7785 0.224 7 0.5 7H5V11.5C5 11.7765 5.226 12 5.505 12H6.495C6.7785 12 7 11.776 7 11.5V7H11.5C11.7765 7 12 6.774 12 6.495V5.505C12 5.2215 11.776 5 11.5 5H7V0.5C7 0.2235 6.774 0 6.495 0H5.505C5.2215 0 5 0.224 5 0.5V5V5Z" fill="white"/></svg>
+        </span>
+
+        <span class="ozpital-wpwetransfer-form__label">
+            <span class="ozpital-wpwetransfer-form__label-text">${label}</span>
+        </span>
+        <span class="ozpital-wpwetransfer-form__notice">
+            <span class="ozpital-wpwetransfer-form__notice-text">${remaining}</span>
+        </span>
         <span class="ozpital-wpwetransfer-form__element ozpital-wpwetransfer-form__element--file">
             <input type="file" name="ozpital-wpwetransfer-files[]" value="" class="ozpital-wpwetransfer-form__input ozpital-wpwetransfer-form__input--file" multiple>
         </span>
     </label>
 
-    <div class="ozpital-wpwetransfer-form__list"></div>
-
     <div class="ozpital-wpwetransfer-form__footer">
         <button type="submit" class="ozpital-wpwetransfer-form__button ozpital-wpwetransfer-form__button--submit" disabled>
-            <span class="ozpital-wpwetransfer-form__label">Transfer</span>
+            <span class="ozpital-wpwetransfer-form__label">
+                <span class="ozpital-wpwetransfer-form__label-text">Transfer</span>
+            </span>
         </button>
     </div>
 

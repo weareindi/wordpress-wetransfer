@@ -3,8 +3,8 @@ Contributors: ozpital
 Donate link: https://www.paypal.me/ozpital
 Tags: wetransfer, transfer, file upload, embed
 Requires at least: 4.9.6
-Tested up to: 4.9.7
-Stable tag: 0.0.7
+Tested up to: 4.9.8
+Stable tag: 0.0.10
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -23,7 +23,8 @@ No longer do you need to send your users away from your site. Let them transfer 
 3. Activate the plugin through the 'Plugins' screen in WordPress
 4. Use the Settings->Ozpital WPWeTransfer screen to apply your WeTransfer API Key
 5. Use the shortcode `[ozpital-wpwetransfer]` to display in your posts/pages
-6. Listen to the `ozpital-wpwetransfer-success` javascript event to handle a successful transfer programmatically
+6. Listen to the `ozpital-wpwetransfer-success` javascript event to handle a successful transfer programmatically. eg: `document.addEventListener('ozpital-wpwetransfer-success', function(event) { console.log(event); });`
+
 
 == Screenshots ==
 
@@ -35,7 +36,16 @@ No longer do you need to send your users away from your site. Let them transfer 
 
 == Changelog ==
 
-= 0.0.8 =
+= 0.1.0 =
+* Refactor for WeTransfer API V2
+* Amend styling to better resemble WeTransfer.com
+* Remove custom web font
+* Now compatible with IE10+
+
+= 0.0.10 =
+* Add files array to "ozpital-wpwetransfer-success" event
+
+= 0.0.8|0.0.9 =
 * Prevent activation if system PHP version is below 7.0
 
 = 0.0.7 =

@@ -1,6 +1,21 @@
 <div class="ozpital-wpwetransfer-item" ozpital-wpwetransfer-item="${index}">
-    <span class="ozpital-wpwetransfer-item__name">${filename}</span>
+    <div class="ozpital-wpwetransfer-item__name">
+        <span class="ozpital-wpwetransfer-item__name-text">${filename}</span>
+    </div>
+
+    <div class="ozpital-wpwetransfer-item__details">
+        <span class="ozpital-wpwetransfer-item__size">
+            <span class="ozpital-wpwetransfer-item__size-text">${size}</span>
+        </span>
+
+        <span class="ozpital-wpwetransfer-item__type">
+            <span class="ozpital-wpwetransfer-item__type-text">${type}</span>
+        </span>
+    </div>
+
     <button type="button" class="ozpital-wpwetransfer-item__button ozpital-wpwetransfer-item__button--delete">
-        <span class="ozpital-wpwetransfer-item__label">Delete Item</span>
+        <span class="ozpital-wpwetransfer-item__icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.00029 3.87384L2.52903 0.363186C2.04563 -0.125698 1.26759 -0.117938 0.785729 0.367842L0.500294 0.656516C0.0168952 1.1454 0.0138261 1.93537 0.494155 2.42115L3.96542 5.93181L0.359111 9.57904C-0.124288 10.0679 -0.116615 10.8548 0.363714 11.3421L0.64915 11.6308C1.13255 12.1197 1.91366 12.1228 2.39399 11.637L6.00029 7.98978L9.6066 11.637C10.09 12.1259 10.868 12.1181 11.3514 11.6308L11.6369 11.3421C12.1187 10.8548 12.1218 10.0648 11.6415 9.57904L8.03517 5.93181L11.5064 2.42115C11.9898 1.93227 11.9822 1.1454 11.5003 0.656516L11.2149 0.367842C10.733 -0.11949 9.95188 -0.122594 9.47155 0.363186L6.00029 3.87384Z" fill="#3F9FFF"/></svg>
+        </span>
     </button>
 </div>

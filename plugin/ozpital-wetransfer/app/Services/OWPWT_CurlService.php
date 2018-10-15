@@ -11,7 +11,7 @@ class OWPWT_CurlService {
     /**
      * Prepare default url prefix
      */
-    public static $url = 'https://dev.wetransfer.com/v1/';
+    public static $url = 'https://dev.wetransfer.com/v2/';
 
     /**
      * Fetch reponse from url
@@ -41,6 +41,11 @@ class OWPWT_CurlService {
             curl_setopt($curl, CURLOPT_POST, 1);
         }
 
+        // If method is 'PUT'
+        if (strtolower($method) === 'put') {
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
+        }
+
         // Post data if required
         if (!empty($data)) {
             curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data, JSON_NUMERIC_CHECK));
@@ -66,11 +71,6 @@ class OWPWT_CurlService {
 
         $response = self::fetch('POST', $url);
 
-        $object = json_decode($response);
-        if (!$object->token) {
-            Error::echo('Token request unsuccessful');
-        }
-
         echo $response;
         die();
     }
@@ -89,30 +89,8 @@ class OWPWT_CurlService {
         ];
 
         $data = [
-            'name' => 'WordPress WeTransfer'
-        ];
-
-        echo self::fetch('POST', $url, $headers, $data);
-        die();
-    }
-
-    /**
-     * Prepare WeTransfer ITEMS request
-     */
-    public static function items() {
-        Error::post();
-        Error::token();
-        Error::transferId();
-        Error::items();
-
-        $url = 'transfers/'. $_POST['transferId'] .'/items';
-
-        $headers = [
-            'Authorization: Bearer ' . $_POST['token']
-        ];
-
-        $data = [
-            'items' => $_POST['items']
+            'message' => 'WordPress WeTransfer',
+            'files' => $_POST['files']
         ];
 
         echo self::fetch('POST', $url, $headers, $data);
@@ -126,36 +104,62 @@ class OWPWT_CurlService {
         Error::post();
         Error::token();
         Error::transferId();
+        Error::fileId();
         Error::partNumber();
-        Error::multipartUploadId();
 
         $headers = [
             'Authorization: Bearer ' . $_POST['token']
         ];
 
-        $url = ('files/'. $_POST['transferId'] .'/uploads/'. $_POST['partNumber'] .'/'. $_POST['multipartUploadId']);
+        $url = ('transfers/'. $_POST['transfer_id'] .'/files/'. $_POST['file_id'] .'/upload-url/'. $_POST['part_number']);
 
         echo self::fetch('GET', $url, $headers);
         die();
     }
 
     /**
-     * Prepare WeTransfer TRANSFER COMPLETE request
+     * Prepare WeTransfer Complete A File Upload request
      */
-    public static function completeTransfer() {
+    public static function completeFileUpload() {
         Error::post();
         Error::token();
         Error::transferId();
+        Error::fileId();
+        Error::uploadedParts();
 
-        $method = 'POST';
+        $method = 'PUT';
 
         $headers = [
             'Authorization: Bearer ' . $_POST['token']
         ];
 
-        $url = ('files/'. $_POST['transferId'] .'/uploads/complete');
+        $data = [
+            'part_numbers' => $_POST['uploaded_parts'],
+        ];
 
-        echo self::fetch('POST', $url, $headers);
+        $url = ('transfers/'. $_POST['transfer_id'] .'/files/'. $_POST['file_id'] .'/upload-complete');
+
+        echo self::fetch($method, $url, $headers, $data);
+        die();
+    }
+
+    /**
+     * Prepare WeTransfer Complete A File Upload request
+     */
+    public static function finalizeTransfer() {
+        Error::post();
+        Error::token();
+        Error::transferId();
+
+        $method = 'PUT';
+
+        $headers = [
+            'Authorization: Bearer ' . $_POST['token']
+        ];
+
+        $url = ('transfers/'. $_POST['transfer_id'] .'/finalize');
+
+        echo self::fetch($method, $url, $headers);
         die();
     }
 }

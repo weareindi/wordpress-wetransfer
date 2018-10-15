@@ -9,18 +9,21 @@ export default class ValidationService {
 
     /**
      * Does the total of all file uploads exceed the maximum threshold?
-     * @param  {array} filesArray An array of File objects
+     * @param  {array} files An array of File objects
      * @return {Boolean}
      */
-    uploadLimit(filesArray) {
+    uploadLimit(files) {
         // Max allowed bytes per transfer
         const maxTotalBytes = 2147483648;
 
         // Combine total bytes in all files
         let totalFileBytes = 0;
-        Array.forEach(filesArray, (fileinfo) => {
-            totalFileBytes += fileinfo.size;
-        });
+
+        for (var i = 0; i < files.length; i++) {
+            const file = files[i];
+
+            totalFileBytes += file.size;
+        }
 
         // Does total combined file bytes exceeds max allowed?
         if (totalFileBytes >= maxTotalBytes) {
@@ -40,7 +43,19 @@ export default class ValidationService {
             return false;
         }
 
-        if (!response.ok) {
+        if (!response.id) {
+            return false;
+        }
+
+        if (!response.name) {
+            return false;
+        }
+
+        if (!response.size) {
+            return false;
+        }
+
+        if (!response.chunk_size) {
             return false;
         }
 

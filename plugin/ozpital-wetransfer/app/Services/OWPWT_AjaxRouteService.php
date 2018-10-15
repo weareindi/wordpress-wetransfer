@@ -57,14 +57,26 @@ class OWPWT_AjaxRouteService {
     }
 
     /**
-     * Register wordpress complete trasnfer routes
+     * Register wordpress complete file upload routes
      */
-    public static function completeTransfer() {
-        add_action('wp_ajax_owpwt--complete-transfer', function() {
-            Curl::completeTransfer();
+    public static function completeFileUpload() {
+        add_action('wp_ajax_owpwt--complete-file-upload', function() {
+            Curl::completeFileUpload();
         });
-        add_action('wp_ajax_nopriv_owpwt--complete-transfer', function() {
-            Curl::completeTransfer();
+        add_action('wp_ajax_nopriv_owpwt--complete-file-upload', function() {
+            Curl::completeFileUpload();
+        });
+    }
+
+    /**
+     * Register wordpress complete file upload routes
+     */
+    public static function finalizeTransfer() {
+        add_action('wp_ajax_owpwt--finalize-transfer', function() {
+            Curl::finalizeTransfer();
+        });
+        add_action('wp_ajax_nopriv_owpwt--finalize-transfer', function() {
+            Curl::finalizeTransfer();
         });
     }
 }
