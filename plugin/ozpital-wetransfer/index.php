@@ -3,7 +3,7 @@
 /*
 Plugin Name: Ozpital WPWeTransfer
 Description: Upload to WeTransfer without leaving wordpress
-Version: 0.0.10
+Version: 0.1.0
 Author: Laurence Archer
 Author URI: https://ozpital.com
 */
@@ -31,7 +31,10 @@ if (is_admin()) {
     Plugin::activation();
 }
 
-if (is_plugin_active('ozpital-wetransfer/index.php') && is_admin()) {
+// Test if plugin active or in mu-plugins
+$pluginActive = (is_plugin_active('ozpital-wetransfer/index.php') || file_exists(WPMU_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'ozpital-wetransfer/index.php')) ? true : false;
+
+if ($pluginActive && is_admin()) {
     // Register Options
     Option::registerApiKey();
 
@@ -39,7 +42,7 @@ if (is_plugin_active('ozpital-wetransfer/index.php') && is_admin()) {
     Menu::register();
 }
 
-if (is_plugin_active('ozpital-wetransfer/index.php')) {
+if ($pluginActive) {
     // Register shortcode
     Shortcode::register();
 
