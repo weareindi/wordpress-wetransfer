@@ -395,16 +395,6 @@
     animation-fill-mode: forwards;
 }
 
-.ozpital-wpwetransfer-progress__background,
-.ozpital-wpwetransfer-progress__amount {
-    animation-delay: 1000ms;
-    animation-duration: 300ms;
-    animation-iteration-count: 1;
-    animation-name: ozpital-progress-stroke;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-}
-
 .ozpital-wpwetransfer-progress__background {
     stroke: #e4e2de;
 
@@ -419,16 +409,6 @@
 
     transition: stroke-dashoffset 300ms;
     will-change: stroke-width, stroke-dashoffset, transform;
-}
-
-@keyframes ozpital-progress-stroke {
-    0% {
-        stroke-width: 0;
-    }
-
-    100% {
-        stroke-width: 10;
-    }
 }
 
 @keyframes ozpital-progress-spin {
