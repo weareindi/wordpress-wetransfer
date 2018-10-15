@@ -5,7 +5,7 @@ export default class ErrorService {
         this.validate = new ValidationService();
     }
 
-    variablesAvailable() {
+    checkPluginVariables() {
         if (typeof owpwt === 'undefined') {
             throw new Error(`Required variable ${'owpwt'} is not available`);
         }
@@ -15,118 +15,99 @@ export default class ErrorService {
         }
     }
 
-    featuresAvailable() {
+    checkPluginFeaturesAvailable() {
         if (!window.FileList) {
             throw new Error('The FileList API is not supported in this browser');
         }
-
-        if (!window.fetch) {
-            throw new Error('The Fetch API is not supported in this browser');
-        }
     }
 
-    files(filesArray) {
-        if (filesArray.length === 0) {
-            throw new Error('No input files');
-        }
-
-        Array.forEach(filesArray, (file) => {
-            if (!(file instanceof File)) {
-                throw new Error('Input files is not a File instance');
-            }
-        });
-
-        // Does total combined file bytes exceeds max allowed?
-        if (!this.validate.uploadLimit(filesArray)) {
-            throw new Error('Your files exceed the maximum allowed of 2GB');
-        }
-    }
-
-    response(response) {
+    checkUploadResponse(response) {
         if (response.status !== 200) {
             throw new Error(response);
         }
     }
 
-    success(response) {
+    checkSuccess(response) {
         if (!response.success) {
             throw new Error(response);
         }
     }
 
-    transfer(transfer) {
-        if (!transfer.id) {
+    checkTransfer(transfer) {
+        if (!transfer) {
             throw new Error('transfer is not defined');
         }
+    }
 
-        if (!transfer.id) {
+    checkTransferId(transfer_id) {
+        if (!transfer_id) {
             throw new Error('transfer id is not defined');
         }
     }
 
-    transferItems(transferItems) {
-        if (!transferItems) {
-            throw new Error('transferItems is not defined');
+    checkTransferFileObject(transfer_file) {
+        if (!transfer_file) {
+            throw new Error('transfer file is not defined');
+        }
+
+        if (!transfer_file.id) {
+            throw new Error('transfer file has no id defined');
+        }
+
+        if (!transfer_file.name) {
+            throw new Error('transfer file has no name defined');
+        }
+
+        if (!transfer_file.size) {
+            throw new Error('transfer file has no size defined');
         }
     }
 
-    uploadData(uploadData) {
-        if (!uploadData) {
-            throw new Error('uploadData not defined');
-        }
-
-        if (!uploadData.upload_url) {
-            throw new Error('No upload url');
+    checkPartNumber(part_number) {
+        if (!part_number) {
+            throw new Error('part number not defined');
         }
     }
 
-    fileinfo(fileinfo) {
-        if (!fileinfo) {
-            throw new Error('No fileinfo defined');
+    checkPartUpload(response) {
+        if (!response) {
+            throw new Error('part upload not defined');
         }
 
-        if (!(fileinfo instanceof File)) {
-            throw new Error('fileinfo is not an instance of File');
-        }
-    }
-
-    totalParts(totalParts) {
-        if (!totalParts) {
-            throw new Error('totalParts not defined');
+        if (!response.url) {
+            throw new Error('part upload did not return the required url');
         }
     }
 
-    partNumber(partNumber) {
-        if (!partNumber) {
-            throw new Error('partNumber not defined');
-        }
-    }
-
-    token(token) {
+    checkToken(token) {
         if (!token) {
             throw new Error('token not defined');
         }
     }
 
-    multipartUploadId(multipartUploadId) {
-        if (!multipartUploadId) {
-            throw new Error('multipartUploadId not defined');
-        }
-    }
-
-    items(items) {
-        if (!items) {
-            throw new Error('items not defined');
-        }
-    }
-
-    chunk(chunk) {
+    checkChunk(chunk) {
         if (!chunk) {
             throw new Error('chunk is not defined');
         }
 
         if (!(chunk instanceof Blob)) {
             throw new Error('chunk is not a Blob');
+        }
+    }
+
+    checkUploadUrl(url) {
+        if (!url) {
+            throw new Error('url is not defined');
+        }
+    }
+
+    checkAuth(response) {
+        if (response.message) {
+            throw new Error(response.message);
+        }
+
+        if (!response.token) {
+            throw new Error('no token returned');
         }
     }
 }

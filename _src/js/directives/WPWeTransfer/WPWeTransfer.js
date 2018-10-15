@@ -4,25 +4,32 @@ import SuccessTemplate from '../../templates/SuccessTemplate.html';
 import FailedTemplate from '../../templates/FailedTemplate.html';
 import TransferringTemplate from '../../templates/TransferringTemplate.html';
 
-import AjaxService from '../../Services/AjaxService/AjaxService';
 import ErrorService from '../../Services/ErrorService/ErrorService';
 import ValidationService from '../../Services/ValidationService/ValidationService';
 
 import qs from 'qs';
+import axios from 'axios';
 import closest from 'closest';
+import filesize from 'filesize';
+import 'custom-event-polyfill';
 
 export class WPWeTransfer {
     constructor(surface) {
         this.error = new ErrorService();
         this.validate = new ValidationService();
+
+        this.settings = {
+            maximumBytes: 2147483648 // 2GB
+        };
+
         this.surface = surface;
         this.run();
     }
 
     async run() {
         try {
-            await this.error.variablesAvailable();
-            await this.error.featuresAvailable();
+            await this.error.checkPluginVariables();
+            await this.error.checkPluginFeaturesAvailable();
             await this.prepareElements();
             await this.initalise();
         } catch(error) {
@@ -38,10 +45,11 @@ export class WPWeTransfer {
 
     async initalise() {
         try {
-            await this.elements.surface.classList.add('ozpital-wpwetransfer-enhanced');
+            await this.elements.surface.classList.add('ozpital-wpwetransfer--enhanced');
             await this.loadStylesheet();
-            await this.replaceContent();
+            await this.replaceTemplate(FormTemplate);
             await this.registerForm();
+            await this.updateFormTemplate();
             await this.registerBinds();
             await this.resetFiles();
             await this.updateStatus('ready');
@@ -58,22 +66,34 @@ export class WPWeTransfer {
         document.body.appendChild(element);
     }
 
-    replaceContent() {
-        this.elements.content.innerHTML = FormTemplate;
-    }
-
     registerForm() {
         this.elements.form = this.elements.surface.querySelector('.ozpital-wpwetransfer-form');
+        this.elements.formLabel = this.elements.form.querySelector('.ozpital-wpwetransfer-form__label-text');
+        this.elements.formNotice = this.elements.form.querySelector('.ozpital-wpwetransfer-form__notice-text');
         this.elements.input = this.elements.form.querySelector('.ozpital-wpwetransfer-form__input--file');
         this.elements.list = this.elements.form.querySelector('.ozpital-wpwetransfer-form__list');
         this.elements.submit = this.elements.form.querySelector('.ozpital-wpwetransfer-form__button--submit');
     }
 
-    fireSuccessEvent() {
+    registerProgressBar() {
+        this.elements.progress = this.elements.surface.querySelector('.ozpital-wpwetransfer-progress');
+        this.elements.progressBackground = this.elements.surface.querySelector('.ozpital-wpwetransfer-progress__background');
+        this.elements.progressAmount = this.elements.surface.querySelector('.ozpital-wpwetransfer-progress__amount');
+    }
+
+    updateProgressBar(percent) {
+        const length = this.elements.progressAmount.getTotalLength();
+        const percentageToOffset = length * ((100 - percent) / 100);
+        this.elements.progressAmount.style.strokeDasharray = length
+        this.elements.progressAmount.style.strokeDashoffset = percentageToOffset
+    }
+
+    triggerSuccessEvent() {
         const event = new CustomEvent('ozpital-wpwetransfer-success', {
             detail: {
                 id: this.transfer.id,
-                url: this.transfer.shortened_url
+                url: this.transfer.url,
+                transfer: this.transfer
             }
         });
 
@@ -93,6 +113,7 @@ export class WPWeTransfer {
 
             this.disableSubmit();
             this.processFiles(this.elements.input.files);
+            this.updateFormTemplate();
             this.populateFilesList();
             this.processStatus();
             this.resetInput();
@@ -111,6 +132,7 @@ export class WPWeTransfer {
 
             this.disableSubmit();
             this.processFiles(event.dataTransfer.files);
+            this.updateFormTemplate();
             this.populateFilesList();
             this.processStatus();
         }, false);
@@ -126,6 +148,7 @@ export class WPWeTransfer {
             this.removeFile(closest(event.target, '.ozpital-wpwetransfer-item').getAttribute('ozpital-wpwetransfer-item'));
             this.disableSubmit();
             this.processFiles();
+            this.updateFormTemplate();
             this.populateFilesList();
             this.processStatus();
         }, false);
@@ -157,14 +180,23 @@ export class WPWeTransfer {
         this.files = a.concat(b);
     }
 
+    bytesToHuman(bytes) {
+        return filesize(bytes);
+    }
+
     populateFilesList() {
         this.elements.list.innerHTML = '';
-        Array.forEach(this.files, (file, index) => {
+
+        for (var i = 0; i < this.files.length; i++) {
+            const file = this.files[i];
+
             let template = FileItemTemplate;
-            template = template.split('${index}').join(index);
+            template = template.split('${index}').join(i);
             template = template.split('${filename}').join(file.name);
+            template = template.split('${size}').join(this.bytesToHuman(file.size));
+            template = template.split('${type}').join(file.name.split('.').pop());
             this.elements.list.innerHTML += template;
-        });
+        }
     }
 
     processStatus() {
@@ -178,268 +210,382 @@ export class WPWeTransfer {
         }
     }
 
-    async updateStatus(status) {
-        await this.elements.surface.setAttribute('status', status);
+    updateStatus(status) {
+        this.elements.surface.setAttribute('status', status);
     }
 
-    async updateUploadProgress(totalUploadedBytes) {
-        let progress = (totalUploadedBytes / this.totalUploadableBytes) * 100;
-        await (document.querySelector('.ozpital-wpwetransfer-transfering__amount').innerHTML = Math.round(progress));
-    }
-
-    async updateContent(template, replacements) {
+    /**
+     * Update template content
+     * @param {String} template     html
+     * @param {Array}  replacements An array of key/value replacement objects
+     */
+    replaceTemplate(template, replacements) {
         if ((typeof replacements !== 'undefined') && (replacements.length > 0)) {
-            Array.forEach(replacements, (replacement) => {
+            for (var i = 0; i < replacements.length; i++) {
+                const replacement = replacements[i];
+
                 for (const find in replacement) {
                     const replace = replacement[find];
                     template = template.split(find).join(replace);
                 }
-            });
+            }
         }
 
         this.elements.content.innerHTML = template;
     }
 
+    /**
+     * Update Form Template Variables
+     */
+    updateFormTemplate() {
+        let label = `Add your files`;
+        let remaining = `Add up to ${this.bytesToHuman(this.settings.maximumBytes)}`;
+
+        if (typeof this.files !== 'undefined' && this.files.length > 0) {
+
+            label = `Add more files`;
+
+            // Calculate Used Bytes
+            let totalUsedBytes = 0;
+            for (var i = 0; i < this.files.length; i++) {
+                totalUsedBytes += this.files[i].size;
+            }
+
+            let remainingBytes = (this.settings.maximumBytes - totalUsedBytes);
+            remaining = `${this.bytesToHuman(remainingBytes)} remaining`;
+
+            if (remainingBytes <= 0) {
+
+                label = `${this.bytesToHuman(this.settings.maximumBytes)} Limit Exceeded`;
+                remaining = `You are ${this.bytesToHuman(totalUsedBytes - this.settings.maximumBytes)} over`;
+                this.disableSubmit();
+            }
+        }
+
+        this.elements.formLabel.innerHTML = label;
+        this.elements.formNotice.innerHTML = remaining;
+    }
+
+    /**
+     * When the user clicks 'Transfer'
+     */
     async submit() {
         try {
             await this.disableSubmit();
-            await this.error.files(this.files);
-            await this.prepareItems();
+            await this.prepareUploadedBytesCounters();
             await this.updateStatus('transfering');
-            await this.updateContent(TransferringTemplate);
+            await this.replaceTemplate(TransferringTemplate);
+            await this.registerProgressBar();
+            await this.updateProgressBar(0);
             await this.getToken();
-            await this.createTransfer();
-            await this.addItems();
-            await this.uploadItems();
-            await this.finished();
+            await this.getTransferObject();
+            await this.mergeFilesIntoTransfer();
+            await this.uploadFiles();
+            await this.finalizeTransfer();
+            await this.finish();
         } catch(error) {
             console.error(error);
             this.updateStatus('error');
-            await this.updateContent(FailedTemplate);
+            await this.replaceTemplate(FailedTemplate);
         }
     }
 
-    async prepareItems() {
+    /**
+     * Prepare counters to track uploaded bytes
+     */
+    prepareUploadedBytesCounters() {
         // Prepare total uploadable bytes counter
         this.totalUploadableBytes = 0;
 
-        this.items = [];
-        Array.forEach(this.files, (fileinfo, index) => {
-            // Add to total uploadable bytes counter
-            this.totalUploadableBytes += fileinfo.size;
+        for (var i = 0; i < this.files.length; i++) {
+            const file = this.files[i];
 
-            // Prepare and add item to array
-            this.items.push({
-                fileinfo: fileinfo,
-                wetransfer: {
-                    item: {
-                        filename: fileinfo.name,
-                        filesize: fileinfo.size,
-                        content_identifier: 'file',
-                        local_identifier: 'owpwt--' + index
-                    }
-                }
-            });
-        });
+            this.totalUploadableBytes += file.size;
+        }
+
+        // Prepare total uploadable bytes counter
+        this.totalBytesRemaining = this.totalUploadableBytes;
     }
 
+    /**
+     * Get WeTransfer Auth Token
+     */
     async getToken() {
         const ajaxSettings = {
-            data: {
+            url: owpwt.ajaxUrl,
+            method: 'post',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
+            data: qs.stringify({
                 action: 'owpwt--auth'
-            }
+            })
         };
 
-        const ajax = new AjaxService(ajaxSettings);
-
-        await ajax.post()
+        // Prepare Request
+        return await axios.request(ajaxSettings)
             .then((response) => {
-                this.error.success(response);
+                this.error.checkAuth(response.data);
 
-                return this.token = response.token;
+                return this.token = response.data.token;
+            })
+            .catch((error) => {
+                throw new Error(error.message);
             });
     }
 
-    async createTransfer() {
+    /**
+     * Get WeTransfer Transfer Object
+     *
+     * We provide WeTransfer with a list of files we want to upload.
+     * In return we get a prepared transfer object.
+     */
+    async getTransferObject() {
+        const files = [];
+
+        for (var i = 0; i < this.files.length; i++) {
+            const file = this.files[i];
+
+            files.push({
+                name: file.name,
+                size: file.size
+            });
+        }
+
         const ajaxSettings = {
-            data: {
+            url: owpwt.ajaxUrl,
+            method: 'post',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
+            data: qs.stringify({
                 action: 'owpwt--transfer',
-                token: this.token
-            }
-        };
-
-        const ajax = new AjaxService(ajaxSettings);
-
-        await ajax.post()
-            .then((transferObject) => {
-                this.error.transfer(transferObject);
-
-                return this.transfer = transferObject;
-            });
-    }
-
-    async addItems() {
-        const transferItems = [];
-        Array.forEach(this.items, (item) => {
-            transferItems.push(item.wetransfer.item);
-        });
-
-        const ajaxSettings = {
-            data: {
-                action: 'owpwt--items',
                 token: this.token,
-                transferId: this.transfer.id,
-                items: transferItems
-            }
+                files: files
+            })
         };
 
-        const ajax = new AjaxService(ajaxSettings);
+        // Prepare Request
+        return await axios.request(ajaxSettings)
+            .then((response) => {
+                this.error.checkTransfer(response.data);
 
-        await ajax.post()
-            .then((transferItems) => {
-                this.error.transferItems(transferItems);
-
-                Array.forEach(transferItems, (transferItem, transferItemIndex) => {
-                    const index = this.items.findIndex((item) => {
-                        return item.wetransfer.item.local_identifier === transferItem.local_identifier;
-                    });
-
-                    return this.items[index].wetransfer.transfer = transferItem;
-                });
+                return this.transfer = response.data;
+            })
+            .catch((error) => {
+                throw new Error(error.message);
             });
     }
 
-    async uploadItems() {
-        // Validate items
-        this.error.items(this.items);
+    /**
+     * Merge array of File Instances Into Transfer Object
+     *
+     * We needed a way to corrolate the correct file from the users system with the prepared WeTransfer Transfer object.
+     * Merging seemed the easiest to manage.
+     */
+    mergeFilesIntoTransfer() {
+        for (var i = 0; i < this.transfer.files.length; i++) {
+            const transfer_file = this.transfer.files[i];
 
-        // Prepare variable for upload progress
-        let totalUploadedBytes = 0;
-
-        // Update upload progress
-        await this.updateUploadProgress(totalUploadedBytes);
-
-        for (const item of this.items) {
-            for (let partNumber = 1; partNumber <= item.wetransfer.transfer.meta.multipart_parts; partNumber++) {
-                // Get Chunk
-                const chunk = await this.getChunk(item.fileinfo, partNumber, item.wetransfer.transfer.meta.multipart_parts);
-
-                // Get upload Data
-                const uploadData = await this.getUploadData(item.wetransfer.transfer, partNumber, item.wetransfer.transfer.meta.multipart_upload_id);
-
-                // Upload Chunk
-                await this.uploadChunk(chunk, uploadData);
-
-                // Update current bytes uploades
-                await (totalUploadedBytes += chunk.size);
-
-                // Update upload progress
-                await this.updateUploadProgress(totalUploadedBytes);
-            }
-
-            // Mark upload as complete
-            await this.setUploadComplete(item.wetransfer.transfer);
+            const file = this.files.find((file) => {
+                return (file.name === transfer_file.name && file.size === transfer_file.size);
+            });
+            transfer_file.file = file;
         }
     }
 
-    async getChunk(fileinfo, partNumber, totalParts) {
-        this.error.fileinfo(fileinfo);
-        this.error.partNumber(partNumber);
-        this.error.totalParts(totalParts);
+    /**
+     * Upload files
+     */
+    async uploadFiles() {
+        for (const transfer_file of this.transfer.files) {
 
-        // Min Chunk Size
-        const minChunkSize = 5242880;
+            // Prepare uploaded parts counter
+            let uploaded_parts = 0;
 
-        // Required chunk size
-        const requiredChunkSize = Math.ceil(fileinfo.size / totalParts);
+            for (let part_number = 1; part_number <= transfer_file.multipart.part_numbers; part_number++) {
+                // Get chunk
+                const chunk = await this.getFilePartChunk(transfer_file, part_number);
 
-        // Calculated chunk size
-        const chunkSize = requiredChunkSize < minChunkSize ? minChunkSize : requiredChunkSize;
+                // Get upload data
+                const upload_url = await this.getFilePartUploadUrl(transfer_file, part_number);
 
-        // Get chunk
-        const chunk = fileinfo.slice(
-            (partNumber - 1) * chunkSize,
-            partNumber * chunkSize
-        );
+                // Upload chunk
+                await this.uploadFilePartChunk(chunk, upload_url);
 
-        return chunk;
+                // Update uploaded parts counter
+                await (uploaded_parts++);
+            }
+
+            // Mark upload as complete
+            await this.completeFileUpload(transfer_file, uploaded_parts);
+        }
     }
 
-    async getUploadData(transfer, partNumber, multipartUploadId) {
-        this.error.token(this.token);
-        this.error.transfer(transfer);
-        this.error.partNumber(partNumber);
-        this.error.multipartUploadId(partNumber);
+    /**
+     * Split File instance into required chunk size
+     * @param  {Object}  transfer_file A complete transfer file object
+     * @param  {Integer} part_number   The required part of the file
+     * @return {File}                  A chunk of the required file instance
+     */
+    getFilePartChunk(transfer_file, part_number) {
+        // Get chunk
+        return transfer_file.file.slice(
+            (part_number - 1) * transfer_file.multipart.chunk_size,
+            part_number * transfer_file.multipart.chunk_size
+        );
+    }
+
+    /**
+     * Get upload url for file part
+     * @param  {Object}  transfer_file A complete transfer file object
+     * @param  {Integer} part_number   The required part of the file
+     * @return {String}                A valid part upload url
+     */
+    async getFilePartUploadUrl(transfer_file, part_number) {
+        this.error.checkToken(this.token);
+        this.error.checkTransferId(this.transfer.id);
+        this.error.checkTransferFileObject(transfer_file);
+        this.error.checkPartNumber(part_number);
 
         const ajaxSettings = {
-            data: {
+            url: owpwt.ajaxUrl,
+            method: 'post',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
+            data: qs.stringify({
                 action: 'owpwt--url',
                 token: this.token,
-                transferId: transfer.id,
-                partNumber: partNumber,
-                multipartUploadId: multipartUploadId
-            }
+                transfer_id: this.transfer.id,
+                part_number: part_number,
+                file_id: transfer_file.id
+            })
         };
 
-        const ajax = new AjaxService(ajaxSettings);
+        // Prepare Request
+        return await axios.request(ajaxSettings)
+            .then((response) => {
+                this.error.checkPartUpload(response.data);
 
-        return await ajax.post()
-            .then((uploadData) => {
-                this.error.uploadData(uploadData);
-
-                return uploadData;
+                return response.data.url;
+            })
+            .catch((error) => {
+                throw new Error(error.message);
             });
     }
 
-    async uploadChunk(chunk, uploadData) {
-        this.error.chunk(chunk);
-        this.error.uploadData(uploadData);
+    /**
+     * Calculate and update upload progress percentage
+     * @param  {Integer} fileLoadedBytes [description]
+     * @param  {Integer} fileTotalBytes  [description]
+     */
+    updateUploadProgress(fileLoadedBytes, fileTotalBytes) {
+        let x = this.totalBytesRemaining - fileLoadedBytes;
+        if (fileLoadedBytes === fileTotalBytes) {
+            x = this.totalBytesRemaining -= fileTotalBytes;
+        }
+
+        let progress = 100 - ((x / this.totalUploadableBytes) * 100);
+        document.querySelector('.ozpital-wpwetransfer-transfering__percentage').setAttribute('data-amount', Math.round(progress));
+
+        this.updateProgressBar(progress);
+    }
+
+    /**
+     * Upload file part chunk to url
+     * @param  {File}    chunk      A valid chunk of file
+     * @param  {String}  upload_url A valid url expecting the chunk
+     * @return {Object}             A confirmation response
+     */
+    async uploadFilePartChunk(chunk, upload_url) {
+        this.error.checkChunk(chunk);
+        this.error.checkUploadUrl(upload_url);
 
         const ajaxSettings = {
-            url: uploadData.upload_url,
-            data: chunk
+            url: upload_url,
+            method: 'put',
+            data: chunk,
+            onUploadProgress: (progressEvent) => {
+                this.updateUploadProgress(progressEvent.loaded, progressEvent.total);
+            }
         };
 
-        const ajax = new AjaxService(ajaxSettings);
-
-        return await ajax.put()
+        // Prepare Request
+        return await axios.request(ajaxSettings)
             .then((response) => {
+                this.error.checkUploadResponse(response);
+
                 return response;
+            })
+            .catch((error) => {
+                throw new Error(error.message);
             });
     }
 
-    async setUploadComplete(transfer) {
-        this.error.token(this.token);
-        this.error.transfer(transfer);
-
+    /**
+     * Set file upload as complete
+     * @param  {Object}  transfer_file  A valid WeTransfer file transfer object
+     * @param  {Integer} uploaded_parts A counter of uploaded parts
+     * @return {Boolean}
+     */
+    async completeFileUpload(transfer_file, uploaded_parts) {
         const ajaxSettings = {
-            data: {
-                action: 'owpwt--complete-transfer',
+            url: owpwt.ajaxUrl,
+            method: 'post',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
+            data: qs.stringify({
+                action: 'owpwt--complete-file-upload',
                 token: this.token,
-                transferId: transfer.id
-            }
+                transfer_id: this.transfer.id,
+                file_id: transfer_file.id,
+                uploaded_parts: uploaded_parts
+            })
         };
 
-        const ajax = new AjaxService(ajaxSettings);
-
-        await ajax.post()
+        // Prepare Request
+        return await axios.request(ajaxSettings)
             .then((response) => {
-                if (!this.validate.transfer(response)) {
-                    this.updateContent(FailedTemplate);
+                if (!this.validate.transfer(response.data)) {
+                    this.replaceTemplate(FailedTemplate);
                     return false;
                 }
 
                 return true;
+            })
+            .catch((error) => {
+                throw new Error(error.message);
             });
     }
 
-    async finished() {
-        this.updateContent(SuccessTemplate, [
-            {'${url}': this.transfer.shortened_url}
-        ]);
+    /**
+     * Finalise entire transfer
+     */
+    async finalizeTransfer() {
+        const ajaxSettings = {
+            url: owpwt.ajaxUrl,
+            method: 'post',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
+            data: qs.stringify({
+                action: 'owpwt--finalize-transfer',
+                token: this.token,
+                transfer_id: this.transfer.id
+            })
+        };
 
-        this.fireSuccessEvent();
+        // Prepare Request
+        return await axios.request(ajaxSettings)
+            .then((response) => {
+                this.transfer = response.data;
+            })
+            .catch((error) => {
+                throw new Error(error.message);
+            });
     }
 
+    /**
+     * Do the final tasks
+     */
+    finish() {
+        this.updateStatus('success');
+        this.replaceTemplate(SuccessTemplate, [
+            {'${url}': this.transfer.url}
+        ]);
 
+        this.triggerSuccessEvent();
+    }
 }

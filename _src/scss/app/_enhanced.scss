@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:500,700');
-
 // Layout
 .ozpital-wpwetransfer__container {
     background-color: #000;
@@ -15,27 +13,10 @@
 .ozpital-wpwetransfer-form {}
 
 .ozpital-wpwetransfer-form__set {
+    position: relative;
     display: block;
 
     padding: em(20);
-}
-
-.ozpital-wpwetransfer-form__icon {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.ozpital-wpwetransfer-form__icon--add {
-    width: em(38);
-    height: em(38);
-
-    background-image: url('../images/button--add.svg');
-    background-position: 50% 50%;
-    background-size: 100% 100%;
-
-    transform: scale(0.9474) rotate(0);
-
-    transition: transform 250ms;
 }
 
 .ozpital-wpwetransfer-form__set--file {
@@ -43,29 +24,102 @@
 
     cursor: pointer;
 
+    .ozpital-wpwetransfer-form__icon {
+        position: absolute;
+        top: em(20);
+        left: em(20);
+
+        display: block;
+        width: em(38);
+        height: em(38);
+
+        border-radius: em(38 / 2);
+        background-color: rgba(63, 159, 255, 1);
+
+        transition: background-color 300ms;
+        will-change: background-color;
+
+        svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: em(12);
+            height: em(12);
+
+            margin-top: -(em(6));
+            margin-left: -(em(6));
+        }
+    }
+
+    .ozpital-wpwetransfer-form__label,
+    .ozpital-wpwetransfer-form__notice {
+        position: relative;
+        display: table;
+        height: em(38);
+        padding-left: em(20) + em(38);
+    }
+
     .ozpital-wpwetransfer-form__label {
-        margin: 0 0 0 0.5em;
+        z-index: 2;
 
+        transform: translateY(0);
 
-        color: #111;
+        transition: transform 300ms;
+        will-change: transform;
+    }
+
+    .ozpital-wpwetransfer-form__notice {
+        position: absolute;
+        z-index: 1;
+        top: em(20);
+        left: em(20);
+
+        opacity: 0;
+        transform: translateY(0);
+
+        transition: opacity 300ms, transform 300ms;
+        will-change: opacity, transform;
+    }
+
+    .ozpital-wpwetransfer-form__label-text,
+    .ozpital-wpwetransfer-form__notice-text {
+        display: table-cell;
+        font-family: sans-serif;
+        font-weight: 500;
+        line-height: 1em;
+        text-transform: none;
+        white-space: nowrap;
+        vertical-align: middle;
+
+        color: rgba(17, 17, 17, 1);
+
+        user-select: none;
+    }
+
+    .ozpital-wpwetransfer-form__label-text {
+        font-size: 1.1em;
+    }
+
+    .ozpital-wpwetransfer-form__notice-text {
+        font-size: 0.7em;
+
+        color: rgba(17, 17, 17, 0.6);
     }
 
     &:hover {
-        .ozpital-wpwetransfer-form__icon--add {
-            transform: scale(1) rotate(180deg);
+        .ozpital-wpwetransfer-form__icon {
+            background-color: rgba(0, 115, 229, 1);
+        }
+
+        .ozpital-wpwetransfer-form__label {
+            transform: translateY(-0.6em);
+        }
+
+        .ozpital-wpwetransfer-form__notice {
+            opacity: 1;
+            transform: translateY(0.6em);
         }
     }
-}
-
-.ozpital-wpwetransfer-form__label {
-    display: inline-block;
-
-    font-family: 'Roboto', sans-serif;
-    font-weight: 500;
-    text-transform: none;
-    vertical-align: middle;
-
-    user-select: none;
 }
 
 .ozpital-wpwetransfer-form__element {}
@@ -111,20 +165,102 @@
 }
 
 .ozpital-wpwetransfer-item {
-    overflow: hidden;
+    position: relative;
 
-    margin: em(1) 0 0;
+    margin: 0 0 em(1);
     padding: em(16) em(20);
 
     background-color: #fff;
+
+    &:hover {
+        .ozpital-wpwetransfer-item__button--delete {
+            opacity: 1;
+        }
+    }
+}
+
+.ozpital-wpwetransfer-item__icon {
+    position: relative;
+
+    svg {
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        left: 50%;
+        width: em(12);
+        height: em(12);
+        margin-top: -(em(12 / 2));
+        margin-left: -(em(12 / 2));
+
+        path {
+            fill: rgba(63, 159, 255, 1);
+        }
+    }
 }
 
 .ozpital-wpwetransfer-item__name {
-    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: em(16) em(20) 0;
+}
 
-    font-family: 'Roboto', sans-serif;
+.ozpital-wpwetransfer-item__name-text {
+    overflow: hidden;
+    font-size: 0.9em;
+    line-height: 1.1em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
-    color: #111;
+    color: rgba(17, 17, 17, 1);
+}
+
+.ozpital-wpwetransfer-item__details {
+    display: flex;
+    margin: 0.9em 0 0;
+    padding: 0.2em 0 0;
+}
+
+.ozpital-wpwetransfer-item__size-text {
+    position: relative;
+    padding: 0 2em 0 0;
+
+    &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: 1em;
+        display: block;
+        width: 0.2em;
+        height: 0.2em;
+        margin-top: -0.1em;
+        margin-right: -0.1em;
+
+        background-color: rgba(17, 17, 17, 1);
+    }
+}
+
+.ozpital-wpwetransfer-item__size,
+.ozpital-wpwetransfer-item__type {
+    display: inline-block;
+}
+
+.ozpital-wpwetransfer-item__size-text,
+.ozpital-wpwetransfer-item__type-text {
+    display: inline-block;
+
+    font-size: 0.7em;
+    line-height: 1em;
+
+    color: rgba(17, 17, 17, 0.6);
+}
+
+.ozpital-wpwetransfer-item__name-text,
+.ozpital-wpwetransfer-item__size-text,
+.ozpital-wpwetransfer-item__type-text {
+    width: 100%;
+    font-family: sans-serif;
 }
 
 .ozpital-wpwetransfer-item__button {
@@ -134,45 +270,75 @@
     background-image: none;
     cursor: pointer;
     outline: none;
+
+    &:hover {
+        .ozpital-wpwetransfer-item__icon {
+            svg {
+                path {
+                    fill: rgba(0, 115, 229, 1);
+                }
+            }
+        }
+    }
 }
 
 .ozpital-wpwetransfer-item__button--delete {
-    float: right;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: em(64);
+    height: 100%;
 
-    .ozpital-wpwetransfer-item__label {
-        font-family: 'Roboto', sans-serif;
-        font-size: 0.8em;
-        font-weight: 500;
-        line-height: 1.2em;
-        color: #3f9fff;
+    opacity: 0;
+
+    transition: opacity 150ms;
+    will-change: opacity;
+
+    &:after {
+        content: '';
+
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        display: block;
+        width: 200%;
+        height: 100%;
+
+        background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 60%);
+
+        pointer-events: none;
     }
 }
 
 .ozpital-wpwetransfer-transfering {
     padding: em(20);
+
+    text-align: center;
+    vertical-align: top;
 }
 
 .ozpital-wpwetransfer-transfering__percentage {
-    text-align: center;
-}
-
-.ozpital-wpwetransfer-transfering__amount {
+    position: relative;
     display: inline-block;
-    font-family: 'Roboto', sans-serif;
-    font-size: em(40);
-    vertical-align: bottom;
 
-    color: #111;
-}
+    &:after {
+        content: attr(data-amount) '%';
 
-.ozpital-wpwetransfer-transfering__symbol {
-    display: inline-block;
-    font-family: 'Roboto', sans-serif;
-    font-size: em(20);
-    line-height: 1.2em;
-    vertical-align: bottom;
+        position: absolute;
+        top: 50%;
+        left: 50%;
 
-    color: #111;
+        display: block;
+
+        font-family: monospace;
+        font-size: em(38);
+        line-height: 1em;
+
+        color: rgba(17, 17, 17, 0.8);
+
+        transform: translate(-50%, -50%);
+    }
 }
 
 
@@ -183,8 +349,8 @@
 
 .ozpital-wpwetransfer-success__message {
     display: block;
-    font-family: 'Roboto', sans-serif;
-    font-size: em(40);
+    font-family: sans-serif;
+    font-size: em(28);
     line-height: 1.2em;
 
     color: #111;
@@ -192,9 +358,14 @@
 
 .ozpital-wpwetransfer-success__url {
     display: block;
-    font-family: 'Roboto', sans-serif;
+    margin: 1em 0 0;
+    font-family: sans-serif;
 
     a {
+        display: inline-block;
+        padding: 0.5em 1em;
+        border: em(1) solid rgba(17, 17, 17, 0.4);
+        border-radius: em(4);
         color: #333;
     }
 }
@@ -206,7 +377,66 @@
 }
 
 .ozpital-wpwetransfer-failed__message {
-    font-family: 'Roboto', sans-serif;
+    font-family: sans-serif;
     font-size: em(30);
     color: #fff;
+}
+
+.ozpital-wpwetransfer-progress {
+    transform: rotate(0);
+    transform-origin: 50% 50%;
+
+    will-change: transform;
+
+    animation-duration: 4000ms;
+    animation-iteration-count: infinite;
+    animation-name: ozpital-progress-spin;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.ozpital-wpwetransfer-progress__background,
+.ozpital-wpwetransfer-progress__amount {
+    animation-delay: 1000ms;
+    animation-duration: 300ms;
+    animation-iteration-count: 1;
+    animation-name: ozpital-progress-stroke;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.ozpital-wpwetransfer-progress__background {
+    stroke: #e4e2de;
+
+    will-change: stroke-width;
+}
+
+.ozpital-wpwetransfer-progress__amount {
+    stroke: #3e9ef9;
+
+    transform: rotate(0);
+    transform-origin: 50% 50%;
+
+    transition: stroke-dashoffset 300ms;
+    will-change: stroke-width, stroke-dashoffset, transform;
+}
+
+@keyframes ozpital-progress-stroke {
+    0% {
+        stroke-width: 0;
+    }
+
+    100% {
+        stroke-width: 10;
+    }
+}
+
+@keyframes ozpital-progress-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

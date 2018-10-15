@@ -7,7 +7,9 @@ module.exports = (gulp, options, plugins) => {
         const browserify = plugins.browserify({
             entries: process.env.JS_SRC + 'script.js',
             debug: false,
-            transform: [plugins.babelify]
+            transform: [
+                plugins.babelify
+            ]
         });
 
         return browserify.bundle()

@@ -28,7 +28,7 @@ class OWPWT_ErrorService {
     }
 
     public static function transferId() {
-        if (!isset($_POST['transferId'])) {
+        if (!isset($_POST['transfer_id'])) {
             AjaxErrorHandler::echo('Transfer ID not supplied');
         }
     }
@@ -40,14 +40,20 @@ class OWPWT_ErrorService {
     }
 
     public static function partNumber() {
-        if (!isset($_POST['partNumber'])) {
+        if (!isset($_POST['part_number'])) {
             AjaxErrorHandler::echo('Part number not supplied');
         }
     }
 
-    public static function multipartUploadId() {
-        if (!isset($_POST['multipartUploadId'])) {
-            AjaxErrorHandler::echo('Multipart Upload ID not supplied');
+    public static function uploadedParts() {
+        if (!isset($_POST['uploaded_parts'])) {
+            AjaxErrorHandler::echo('Uploaded parts not supplied');
+        }
+    }
+
+    public static function fileId() {
+        if (!isset($_POST['file_id'])) {
+            AjaxErrorHandler::echo('File ID not supplied');
         }
     }
 
