@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/ozpital
 Tags: wetransfer, transfer, file upload, embed
 Requires at least: 4.9.6
 Tested up to: 4.9.8
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -35,6 +35,12 @@ No longer do you need to send your users away from your site. Let them transfer 
 5. Upload successful
 
 == Changelog ==
+
+= 0.1.1 =
+* Added support for defined `WETRANSFER_API_KEY`
+* Added support for env set `WETRANSFER_API_KEY`
+* Added script editor to admin options page (incl. Contact Form 7 (CF7) example)
+* Changed plugin actions priority
 
 = 0.1.0 =
 * Refactor for WeTransfer API V2
