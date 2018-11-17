@@ -2,6 +2,7 @@
 
 namespace Ozpital\WPWeTransfer\Services;
 
+use Ozpital\WPWeTransfer\Core\OWPWT_Option as Option;
 use Ozpital\WPWeTransfer\Services\OWPWT_ErrorService as Error;
 
 /**
@@ -27,7 +28,7 @@ class OWPWT_CurlService {
         // Default headers for each curl request
         $defaultHeaders = [
             'Content-Type: application/json',
-            'x-api-key: ' . get_option('api-key')
+            'x-api-key: ' . Option::getApiKey()
         ];
 
         // Initalise curl request
