@@ -18,7 +18,7 @@ class OWPWT_Assets {
 
             // Enqueue style
             wp_enqueue_style(Plugin::getSlug() . '-css', OWPWT_URL . $pathCss, false, filemtime(OWPWT_DIR . $pathCss));
-        });
+        }, 99);
     }
 
     /**
@@ -35,6 +35,6 @@ class OWPWT_Assets {
                 'pluginDir' => OWPWT_URL,
                 'ajaxUrl' => admin_url('admin-ajax.php')
             ]);
-        });
+        }, 99);
     }
 }

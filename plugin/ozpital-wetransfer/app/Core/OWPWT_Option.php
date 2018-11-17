@@ -19,15 +19,13 @@ class OWPWT_Option {
      * @param  String $label Label of option to display
      * @param  String $type  Type of input field to use
      */
-    public static function register(String $name, String $label, String $type) {
+    public static function register(String $name) {
         if (!is_array(self::$options)) {
             self::$options = [];
         }
 
         array_push(self::$options, [
-            'name' => $name,
-            'label' => $label,
-            'type' => $type
+            'name' => $name
         ]);
 
         self::registerSetting($name);
@@ -39,7 +37,7 @@ class OWPWT_Option {
     public static function registerSetting($name) {
         add_action('admin_init', function() use ($name) {
             register_setting(Plugin::getSlug() . '-options', $name);
-        });
+        }, 99);
     }
 
     /**
@@ -53,6 +51,31 @@ class OWPWT_Option {
      * Register API Key Option
      */
     public static function registerApiKey() {
-        self::register('api-key', 'WeTransfer API Key', 'text');
+        self::register('api-key');
+    }
+
+    /**
+     * Register API Key Option
+     */
+    public static function getApiKey() {
+        $api_key = false;
+        if (get_option('api-key')) {
+            $api_key = get_option('api-key');
+        }
+        if (!empty(getenv('WETRANSFER_API_KEY'))) {
+            $api_key = getenv('WETRANSFER_API_KEY');
+        }
+        if (defined('WETRANSFER_API_KEY')) {
+            $api_key = WETRANSFER_API_KEY;
+        }
+
+        return $api_key;
+    }
+
+    /**
+     * Register API Key Option
+     */
+    public static function registerSuccessScript() {
+        self::register('success-script');
     }
 }

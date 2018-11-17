@@ -2,6 +2,7 @@
 
 namespace Ozpital\WPWeTransfer\Services;
 
+use Ozpital\WPWeTransfer\Core\OWPWT_Option as Option;
 use Ozpital\WPWeTransfer\Core\OWPWT_Plugin as Plugin;
 use Ozpital\WPWeTransfer\Handlers\OWPWT_AjaxErrorHandler as AjaxErrorHandler;
 
@@ -16,7 +17,7 @@ class OWPWT_ErrorService {
     }
 
     public static function apiKey() {
-        if (!get_option('api-key')) {
+        if (!Option::getApiKey()) {
             AjaxErrorHandler::echo('API Key not set');
         }
     }
