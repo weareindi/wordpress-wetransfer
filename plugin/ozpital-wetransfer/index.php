@@ -16,7 +16,6 @@ use Ozpital\WPWeTransfer\Core\OWPWT_Option as Option;
 use Ozpital\WPWeTransfer\Core\OWPWT_Plugin as Plugin;
 use Ozpital\WPWeTransfer\Core\OWPWT_Shortcode as Shortcode;
 use Ozpital\WPWeTransfer\Services\OWPWT_AjaxRouteService as Route;
-
 // Define plugin root
 define('OWPWT_DIR', __DIR__ . DIRECTORY_SEPARATOR);
 define('OWPWT_PLUGIN_PATH', OWPWT_DIR . 'index.php');
@@ -41,6 +40,7 @@ if ($pluginActive && is_admin()) {
 
     // Register menu
     Menu::register();
+    Menu::registerPluginLink();
 }
 
 if ($pluginActive) {

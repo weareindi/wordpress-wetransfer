@@ -27,6 +27,16 @@ class OWPWT_Menu {
     }
 
     /**
+     * Regiser Plugin List Settings Link
+     */
+    public static function registerPluginLink() {
+        add_action('plugin_action_links_' . Plugin::getBasename(), function($links) {
+            $links[] = '<a href="'. esc_url( get_admin_url(null, 'options-general.php?page=ozpital-wpwetransfer') ) .'">Settings</a>';
+            return $links;
+        }, 99);
+    }
+
+    /**
      * Admin page HTML
      */
     public static function html() {
