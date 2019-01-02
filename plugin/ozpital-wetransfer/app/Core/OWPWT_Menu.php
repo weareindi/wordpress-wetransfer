@@ -68,6 +68,17 @@ class OWPWT_Menu {
                         <?php continue; ?>
                         <?php } ?>
 
+                        <?php if ($option['name'] === 'wetransfer-message') { ?>
+                        <tr valign="top">
+                            <th scope="row">WeTransfer Message</th>
+                            <td>
+                                <input type="text" name="<?php echo $option['name']; ?>" value="<?php echo esc_attr(get_option($option['name'])); ?>" class="regular-text" />
+                                <p class="description">This message appears on WeTransfer alongside the uploaded file.</p>
+                            </td>
+                        </tr>
+                        <?php continue; ?>
+                        <?php } ?>
+
                         <?php if ($option['name'] === 'success-script') { ?>
                         <tr>
                             <th scope="row">On Success Event</th>

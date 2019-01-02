@@ -78,4 +78,24 @@ class OWPWT_Option {
     public static function registerSuccessScript() {
         self::register('success-script');
     }
+
+    /**
+     * Register WeTransfer Message Option
+     */
+    public static function registerWeTransferMessage() {
+        self::register('wetransfer-message');
+    }
+
+    /**
+     * Get WeTransfer Message Option
+     */
+    public static function getWeTransferMessage() {
+        $message = 'WordPress WeTransfer';
+
+        if (get_option('wetransfer-message')) {
+            $message = get_option('wetransfer-message');
+        }
+
+        return $message;
+    }
 }

@@ -90,7 +90,7 @@ class OWPWT_CurlService {
         ];
 
         $data = [
-            'message' => 'WordPress WeTransfer',
+            'message' => Option::getWeTransferMessage(),
             'files' => $_POST['files']
         ];
 
