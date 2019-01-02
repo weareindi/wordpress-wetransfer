@@ -32,7 +32,7 @@ if (is_admin()) {
 }
 
 // Test if plugin active or in mu-plugins
-$pluginActive = (is_plugin_active('ozpital-wetransfer/index.php') || file_exists(WPMU_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'ozpital-wetransfer/index.php')) ? true : false;
+$pluginActive = (is_plugin_active(Plugin::getBasename()) || file_exists(WPMU_PLUGIN_DIR . DIRECTORY_SEPARATOR . Plugin::getBasename())) ? true : false;
 
 if ($pluginActive && is_admin()) {
     // Register Options

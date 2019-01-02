@@ -43,6 +43,13 @@ class OWPWT_Plugin {
     }
 
     /**
+     * Get plugin basename
+     */
+    public static function getBasename() {
+        return 'ozpital-wetransfer/index.php';
+    }
+
+    /**
      * Activation checks
      */
     public static function activation() {
