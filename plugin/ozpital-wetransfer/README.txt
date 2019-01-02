@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/ozpital
 Tags: wetransfer, transfer, file upload, embed
 Requires at least: 4.9.6
 Tested up to: 4.9.8
-Stable tag: 0.1.1
+Stable tag: 0.1.2
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -35,6 +35,9 @@ No longer do you need to send your users away from your site. Let them transfer 
 5. Upload successful
 
 == Changelog ==
+
+= 0.1.2 =
+* Fix for script editor not appearing in admin menu
 
 = 0.1.1 =
 * Added support for defined `WETRANSFER_API_KEY`
