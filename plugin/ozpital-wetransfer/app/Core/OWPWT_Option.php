@@ -80,6 +80,50 @@ class OWPWT_Option {
     }
 
     /**
+     * [registerTransferCompleteMessage description]
+     * @return [type] [description]
+     */
+    public static function registerTransferCompleteMessage() {
+        self::register('transfer-complete-message');
+    }
+
+    /**
+     * [registerTransferCompleteMessage description]
+     * @return [type] [description]
+     */
+    public static function getTransferCompleteMessage() {
+        $message = '';
+
+        if (get_option('transfer-complete-message')) {
+            $message = get_option('transfer-complete-message');
+        }
+
+        return $message;
+    }
+
+    /**
+     * [registerTransferCompleteShowUrl description]
+     * @return [type] [description]
+     */
+    public static function registerTransferCompleteShowUrl() {
+        self::register('transfer-complete-show-url');
+    }
+
+    /**
+     * [registerTransferCompleteShowUrl description]
+     * @return [type] [description]
+     */
+    public static function getTransferCompleteShowUrl() {
+        $show = 'true';
+
+        if (get_option('transfer-complete-show-url') || get_option('transfer-complete-show-url') !== null) {
+            $show = get_option('transfer-complete-show-url') === "1" ? 'true' : 'false';
+        }
+
+        return $show;
+    }
+
+    /**
      * Register WeTransfer Message Option
      */
     public static function registerWeTransferMessage() {

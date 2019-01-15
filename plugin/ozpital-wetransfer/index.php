@@ -37,6 +37,8 @@ $pluginActive = (is_plugin_active(Plugin::getBasename()) || file_exists(WPMU_PLU
 if ($pluginActive && is_admin()) {
     // Register Options
     Option::registerApiKey();
+    Option::registerTransferCompleteMessage();
+    Option::registerTransferCompleteShowUrl();
     Option::registerWeTransferMessage();
     Option::registerSuccessScript();
 

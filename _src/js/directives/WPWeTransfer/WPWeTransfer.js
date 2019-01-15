@@ -583,6 +583,8 @@ export class WPWeTransfer {
     finish() {
         this.updateStatus('success');
         this.replaceTemplate(SuccessTemplate, [
+            {'${message}': owpwt.transferCompleteMessage},
+            {'${showurl}': owpwt.transferCompleteShowUrl},
             {'${url}': this.transfer.url}
         ]);
 
