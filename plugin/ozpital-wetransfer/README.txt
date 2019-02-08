@@ -3,8 +3,8 @@ Contributors: ozpital
 Donate link: https://www.paypal.me/ozpital
 Tags: wetransfer, transfer, file upload, embed
 Requires at least: 4.9.6
-Tested up to: 5.0.2
-Stable tag: 0.2.0
+Tested up to: 5.0.3
+Stable tag: 0.2.1
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
