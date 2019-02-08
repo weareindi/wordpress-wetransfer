@@ -88,6 +88,16 @@ export class WPWeTransfer {
         this.elements.progressAmount.style.strokeDashoffset = percentageToOffset
     }
 
+    triggerTransferProgressEvent(progress) {
+        const event = new CustomEvent('ozpital-wpwetransfer-transferring', {
+            detail: {
+                progress: progress
+            }
+        });
+
+        document.dispatchEvent(event);
+    }
+
     triggerFilesChangeEvent() {
         const event = new CustomEvent('ozpital-wpwetransfer-change', {
             detail: {
@@ -289,6 +299,7 @@ export class WPWeTransfer {
             await this.updateStatus('transfering');
             await this.replaceTemplate(TransferringTemplate);
             await this.registerProgressBar();
+            await this.triggerTransferProgressEvent(0);
             await this.updateProgressBar(0);
             await this.getToken();
             await this.getTransferObject();
@@ -497,6 +508,7 @@ export class WPWeTransfer {
         document.querySelector('.ozpital-wpwetransfer-transfering__percentage').setAttribute('data-amount', Math.round(progress));
 
         this.updateProgressBar(progress);
+        this.triggerTransferProgressEvent(progress);
     }
 
     /**
