@@ -36,6 +36,11 @@ No longer do you need to send your users away from your site. Let them transfer 
 
 == Changelog ==
 
+= 0.2.1 =
+* Add `ozpital-wpwetransfer-change` event
+* Add `ozpital-wpwetransfer-transferring` event
+* Fix issue with WeTransfer URL not displaying when it should
+
 = 0.2.0 =
 * Add settings link to plugin listing
 * Add custom WeTransfer message field
