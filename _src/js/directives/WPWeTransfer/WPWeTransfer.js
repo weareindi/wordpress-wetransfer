@@ -88,6 +88,16 @@ export class WPWeTransfer {
         this.elements.progressAmount.style.strokeDashoffset = percentageToOffset
     }
 
+    triggerFilesChangeEvent() {
+        const event = new CustomEvent('ozpital-wpwetransfer-change', {
+            detail: {
+                files: this.files
+            }
+        });
+
+        document.dispatchEvent(event);
+    }
+
     triggerSuccessEvent() {
         const event = new CustomEvent('ozpital-wpwetransfer-success', {
             detail: {
@@ -117,6 +127,7 @@ export class WPWeTransfer {
             this.populateFilesList();
             this.processStatus();
             this.resetInput();
+            this.triggerFilesChangeEvent();
         }, false);
 
         window.addEventListener('dragover', function(event) {
@@ -135,6 +146,7 @@ export class WPWeTransfer {
             this.updateFormTemplate();
             this.populateFilesList();
             this.processStatus();
+            this.triggerFilesChangeEvent();
         }, false);
 
         this.elements.list.addEventListener('click', (event) => {
@@ -151,6 +163,7 @@ export class WPWeTransfer {
             this.updateFormTemplate();
             this.populateFilesList();
             this.processStatus();
+            this.triggerFilesChangeEvent();
         }, false);
     }
 
