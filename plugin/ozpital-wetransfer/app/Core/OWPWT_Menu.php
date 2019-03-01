@@ -74,7 +74,7 @@ class OWPWT_Menu {
                             <tr valign="top">
                                 <th scope="row">Transfer Complete Message</th>
                                 <td>
-                                    <input type="text" name="<?php echo $option['name']; ?>" value="<?php echo (get_option($option['name']) !== null) ? get_option($option['name']) : 'You\'re done!'; ?>" class="regular-text" />
+                                    <input type="text" name="<?php echo $option['name']; ?>" value="<?php echo (get_option($option['name']) !== null && !empty(get_option($option['name']))) ? get_option($option['name']) : 'You\'re done!'; ?>" class="regular-text" />
                                     <p class="description">This message appears on your site when the file has uploaded</p>
                                 </td>
                             </tr>
@@ -88,7 +88,7 @@ class OWPWT_Menu {
                             <tr valign="top">
                                 <th scope="row">Show Transfer URL</th>
                                 <td>
-                                    <input type="checkbox" name="<?php echo $option['name']; ?>" value="1" <?php echo (get_option($option['name']) == '1' || get_option($option['name']) === null) ? 'checked' : ''; ?>/>
+                                    <input type="checkbox" name="<?php echo $option['name']; ?>" value="1" <?php echo (get_option($option['name']) === null || get_option($option['name']) == '1') ? 'checked' : ''; ?>/>
                                 </td>
                             </tr>
                         </table>

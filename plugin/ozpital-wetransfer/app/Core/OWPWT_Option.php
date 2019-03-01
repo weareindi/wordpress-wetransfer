@@ -114,10 +114,10 @@ class OWPWT_Option {
      * @return [type] [description]
      */
     public static function getTransferCompleteShowUrl() {
-        $show = 'true';
+        $show = 'false';
 
-        if (get_option('transfer-complete-show-url') || get_option('transfer-complete-show-url') !== null) {
-            $show = get_option('transfer-complete-show-url') === "1" ? 'true' : 'false';
+        if (get_option('transfer-complete-show-url') === null || get_option('transfer-complete-show-url') == '1') {
+            $show = 'true';
         }
 
         return $show;
