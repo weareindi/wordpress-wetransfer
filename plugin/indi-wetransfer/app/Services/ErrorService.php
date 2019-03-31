@@ -1,15 +1,15 @@
 <?php
 
-namespace Ozpital\WPWeTransfer\Services;
+namespace WeTransfer\Services;
 
-use Ozpital\WPWeTransfer\Core\OWPWT_Option as Option;
-use Ozpital\WPWeTransfer\Core\OWPWT_Plugin as Plugin;
-use Ozpital\WPWeTransfer\Handlers\OWPWT_AjaxErrorHandler as AjaxErrorHandler;
+use WeTransfer\Core\Options as Options;
+use WeTransfer\Core\Plugin as Plugin;
+use WeTransfer\Handlers\AjaxErrorHandler as AjaxErrorHandler;
 
 /**
  * Error Service
  */
-class OWPWT_ErrorService {
+class ErrorService {
     public static function post() {
         if (!isset($_POST)) {
             AjaxErrorHandler::echo('No post data');
@@ -17,7 +17,7 @@ class OWPWT_ErrorService {
     }
 
     public static function apiKey() {
-        if (!Option::getApiKey()) {
+        if (!Options::getWeTransferApiKey()) {
             AjaxErrorHandler::echo('API Key not set');
         }
     }

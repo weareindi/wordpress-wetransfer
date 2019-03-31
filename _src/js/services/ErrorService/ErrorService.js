@@ -6,12 +6,12 @@ export default class ErrorService {
     }
 
     checkPluginVariables() {
-        if (typeof owpwt === 'undefined') {
-            throw new Error(`Required variable ${'owpwt'} is not available`);
+        if (typeof indiwt === 'undefined') {
+            throw new Error(`Required variable ${'indiwt'} is not available`);
         }
 
-        if (!owpwt.pluginDir) {
-            throw new Error(`Required variable ${'owpwt.pluginDir'} is not available`);
+        if (!indiwt.pluginDir) {
+            throw new Error(`Required variable ${'indiwt.pluginDir'} is not available`);
         }
     }
 

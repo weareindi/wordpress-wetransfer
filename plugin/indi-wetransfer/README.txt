@@ -1,9 +1,9 @@
-=== Ozpital WPWeTransfer ===
-Contributors: ozpital
-Donate link: https://www.paypal.me/ozpital
+=== Indi WeTransfer ===
+Contributors: weareindi, ozpital
+Donate link: https://weareindi.co.uk/
 Tags: wetransfer, transfer, file upload, embed
 Requires at least: 4.9.6
-Tested up to: 5.0.3
+Tested up to: 5.1.1
 Stable tag: 0.2.1
 Requires PHP: 7.0
 License: GPLv2 or later
@@ -19,11 +19,11 @@ No longer do you need to send your users away from your site. Let them transfer 
 == Installation ==
 
 1. Sign up to the WeTransfer API (https://developers.wetransfer.com/) and create a WeTransfer API Key to use with this plugin.
-2. Upload the plugin files to the `/wp-content/plugins/ozpital-wpwetransfer` directory, or install the plugin through the WordPress plugins screen directly.
+2. Upload the plugin to the `/wp-content/plugins/` directory, or install the plugin through the WordPress plugins screen directly.
 3. Activate the plugin through the 'Plugins' screen in WordPress
-4. Use the Settings->Ozpital WPWeTransfer screen to apply your WeTransfer API Key
-5. Use the shortcode `[ozpital-wpwetransfer]` to display in your posts/pages
-6. Listen to the `ozpital-wpwetransfer-success` javascript event to handle a successful transfer programmatically. eg: `document.addEventListener('ozpital-wpwetransfer-success', function(event) { console.log(event); });`
+4. Use the Settings->Indi WeTransfer screen to apply your WeTransfer API Key
+5. Use the shortcode `[wetransfer]` to display in your posts/pages
+6. Listen to the `wetransfer-success` javascript event to handle a successful transfer programmatically. eg: `document.addEventListener('wetransfer-success', function(event) { console.log(event); });`
 
 
 == Screenshots ==
@@ -36,9 +36,15 @@ No longer do you need to send your users away from your site. Let them transfer 
 
 == Changelog ==
 
+= 1.0.0 =
+* Major change to naming. From "Ozpital" to "Indi" based throughout plugin
+* Added proper support for Contact Form 7. When both plugins are enabled there should now be a `[wetransfer]` form field to add via the CF7 gui.
+* Replaced long shortcode with a simple `[wetransfer]`
+* Added tabs to admin settings for easier maintainability
+
 = 0.2.1 =
-* Add `ozpital-wpwetransfer-change` event
-* Add `ozpital-wpwetransfer-transferring` event
+* Add `ozpital-wetransfer-change` event
+* Add `ozpital-wetransfer-transferring` event
 * Fix issue with WeTransfer URL not displaying when it should
 
 = 0.2.0 =
@@ -61,7 +67,7 @@ No longer do you need to send your users away from your site. Let them transfer 
 * Now compatible with IE10+
 
 = 0.0.10 =
-* Add files array to "ozpital-wpwetransfer-success" event
+* Add files array to "ozpital-wetransfer-success" event
 
 = 0.0.8|0.0.9 =
 * Prevent activation if system PHP version is below 7.0

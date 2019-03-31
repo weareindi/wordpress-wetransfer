@@ -1,14 +1,14 @@
 <?php
 
-namespace Ozpital\WPWeTransfer\Services;
+namespace WeTransfer\Services;
 
-use Ozpital\WPWeTransfer\Core\OWPWT_Option as Option;
-use Ozpital\WPWeTransfer\Services\OWPWT_ErrorService as Error;
+use WeTransfer\Core\Options as Options;
+use WeTransfer\Services\ErrorService as Error;
 
 /**
  * Curse Service
  */
-class OWPWT_CurlService {
+class CurlService {
     /**
      * Prepare default url prefix
      */
@@ -18,8 +18,8 @@ class OWPWT_CurlService {
      * Fetch reponse from url
      * @param  String $method  Post/Pull/Get
      * @param  String $url     URL to fetch from
-     * @param  array  $headers Desired headers to send with request
-     * @param  array  $data    Desired data to send with request
+     * @param  Array  $headers Desired headers to send with request
+     * @param  Array  $data    Desired data to send with request
      * @return String          Any response from URL
      */
     public static function fetch(String $method, String $url, Array $headers = [], Array $data = []) {
@@ -28,7 +28,7 @@ class OWPWT_CurlService {
         // Default headers for each curl request
         $defaultHeaders = [
             'Content-Type: application/json',
-            'x-api-key: ' . Option::getApiKey()
+            'x-api-key: ' . Options::getWeTransferApiKey()
         ];
 
         // Initalise curl request
@@ -90,7 +90,7 @@ class OWPWT_CurlService {
         ];
 
         $data = [
-            'message' => Option::getWeTransferMessage(),
+            'message' => Options::getMessagesWeTransferMessage(),
             'files' => $_POST['files']
         ];
 

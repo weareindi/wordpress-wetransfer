@@ -1,30 +1,30 @@
 // Layout
-.ozpital-wpwetransfer__container {
+.indi-wetransfer__container {
     background-color: #000;
 }
 
-.ozpital-wpwetransfer__content {
+.indi-wetransfer__content {
     padding: 0;
 
     background-color: #f5f5f5;
 }
 
 // Form
-.ozpital-wpwetransfer-form {}
+.indi-wetransfer-transferer {}
 
-.ozpital-wpwetransfer-form__set {
+.indi-wetransfer-transferer__set {
     position: relative;
     display: block;
 
     padding: em(20);
 }
 
-.ozpital-wpwetransfer-form__set--file {
+.indi-wetransfer-transferer__set--file {
     background-color: #fff;
 
     cursor: pointer;
 
-    .ozpital-wpwetransfer-form__icon {
+    .indi-wetransfer-transferer__icon {
         position: absolute;
         top: em(20);
         left: em(20);
@@ -51,15 +51,15 @@
         }
     }
 
-    .ozpital-wpwetransfer-form__label,
-    .ozpital-wpwetransfer-form__notice {
+    .indi-wetransfer-transferer__label,
+    .indi-wetransfer-transferer__notice {
         position: relative;
         display: table;
         height: em(38);
         padding-left: em(20) + em(38);
     }
 
-    .ozpital-wpwetransfer-form__label {
+    .indi-wetransfer-transferer__label {
         z-index: 2;
 
         transform: translateY(0);
@@ -68,7 +68,7 @@
         will-change: transform;
     }
 
-    .ozpital-wpwetransfer-form__notice {
+    .indi-wetransfer-transferer__notice {
         position: absolute;
         z-index: 1;
         top: em(20);
@@ -81,8 +81,8 @@
         will-change: opacity, transform;
     }
 
-    .ozpital-wpwetransfer-form__label-text,
-    .ozpital-wpwetransfer-form__notice-text {
+    .indi-wetransfer-transferer__label-text,
+    .indi-wetransfer-transferer__notice-text {
         display: table-cell;
         font-family: sans-serif;
         font-weight: 500;
@@ -96,47 +96,47 @@
         user-select: none;
     }
 
-    .ozpital-wpwetransfer-form__label-text {
+    .indi-wetransfer-transferer__label-text {
         font-size: 1.1em;
     }
 
-    .ozpital-wpwetransfer-form__notice-text {
+    .indi-wetransfer-transferer__notice-text {
         font-size: 0.7em;
 
         color: rgba(17, 17, 17, 0.6);
     }
 
     &:hover {
-        .ozpital-wpwetransfer-form__icon {
+        .indi-wetransfer-transferer__icon {
             background-color: rgba(0, 115, 229, 1);
         }
 
-        .ozpital-wpwetransfer-form__label {
+        .indi-wetransfer-transferer__label {
             transform: translateY(-0.6em);
         }
 
-        .ozpital-wpwetransfer-form__notice {
+        .indi-wetransfer-transferer__notice {
             opacity: 1;
             transform: translateY(0.6em);
         }
     }
 }
 
-.ozpital-wpwetransfer-form__element {}
+.indi-wetransfer-transferer__element {}
 
-.ozpital-wpwetransfer-form__element--file {
+.indi-wetransfer-transferer__element--file {
     display: none;
 }
 
-.ozpital-wpwetransfer-form__input {}
+.indi-wetransfer-transferer__input {}
 
-.ozpital-wpwetransfer-form__input--file {}
+.indi-wetransfer-transferer__input--file {}
 
-.ozpital-wpwetransfer-form__button {
+.indi-wetransfer-transferer__button {
     margin: 0 auto;
 }
 
-.ozpital-wpwetransfer-form__button--submit {
+.indi-wetransfer-transferer__button--submit {
     display: block;
 
     min-width: em(160);
@@ -160,11 +160,11 @@
     }
 }
 
-.ozpital-wpwetransfer-form__footer {
+.indi-wetransfer-transferer__footer {
     padding: em(20);
 }
 
-.ozpital-wpwetransfer-item {
+.indi-wetransfer-item {
     position: relative;
 
     margin: 0 0 em(1);
@@ -173,13 +173,13 @@
     background-color: #fff;
 
     &:hover {
-        .ozpital-wpwetransfer-item__button--delete {
+        .indi-wetransfer-item__button--delete {
             opacity: 1;
         }
     }
 }
 
-.ozpital-wpwetransfer-item__icon {
+.indi-wetransfer-item__icon {
     position: relative;
 
     pointer-events: none;
@@ -200,7 +200,7 @@
     }
 }
 
-.ozpital-wpwetransfer-item__name {
+.indi-wetransfer-item__name {
     position: absolute;
     top: 0;
     left: 0;
@@ -208,7 +208,7 @@
     padding: em(16) em(20) 0;
 }
 
-.ozpital-wpwetransfer-item__name-text {
+.indi-wetransfer-item__name-text {
     overflow: hidden;
     font-size: 0.9em;
     line-height: 1.1em;
@@ -218,13 +218,13 @@
     color: rgba(17, 17, 17, 1);
 }
 
-.ozpital-wpwetransfer-item__details {
+.indi-wetransfer-item__details {
     display: flex;
     margin: 0.9em 0 0;
     padding: 0.2em 0 0;
 }
 
-.ozpital-wpwetransfer-item__size-text {
+.indi-wetransfer-item__size-text {
     position: relative;
     padding: 0 2em 0 0;
 
@@ -243,13 +243,13 @@
     }
 }
 
-.ozpital-wpwetransfer-item__size,
-.ozpital-wpwetransfer-item__type {
+.indi-wetransfer-item__size,
+.indi-wetransfer-item__type {
     display: inline-block;
 }
 
-.ozpital-wpwetransfer-item__size-text,
-.ozpital-wpwetransfer-item__type-text {
+.indi-wetransfer-item__size-text,
+.indi-wetransfer-item__type-text {
     display: inline-block;
 
     font-size: 0.7em;
@@ -258,14 +258,14 @@
     color: rgba(17, 17, 17, 0.6);
 }
 
-.ozpital-wpwetransfer-item__name-text,
-.ozpital-wpwetransfer-item__size-text,
-.ozpital-wpwetransfer-item__type-text {
+.indi-wetransfer-item__name-text,
+.indi-wetransfer-item__size-text,
+.indi-wetransfer-item__type-text {
     width: 100%;
     font-family: sans-serif;
 }
 
-.ozpital-wpwetransfer-item__button {
+.indi-wetransfer-item__button {
     padding: 0;
     border: 0;
     background-color: transparent;
@@ -274,7 +274,7 @@
     outline: none;
 
     &:hover {
-        .ozpital-wpwetransfer-item__icon {
+        .indi-wetransfer-item__icon {
             svg {
                 path {
                     fill: rgba(0, 115, 229, 1);
@@ -284,7 +284,7 @@
     }
 }
 
-.ozpital-wpwetransfer-item__button--delete {
+.indi-wetransfer-item__button--delete {
     position: absolute;
     top: 0;
     right: 0;
@@ -313,14 +313,14 @@
     }
 }
 
-.ozpital-wpwetransfer-transfering {
+.indi-wetransfer-transfering {
     padding: em(20);
 
     text-align: center;
     vertical-align: top;
 }
 
-.ozpital-wpwetransfer-transfering__percentage {
+.indi-wetransfer-transfering__percentage {
     position: relative;
     display: inline-block;
 
@@ -344,12 +344,12 @@
 }
 
 
-.ozpital-wpwetransfer-success {
+.indi-wetransfer-success {
     padding: em(20);
     text-align: center;
 }
 
-.ozpital-wpwetransfer-success__message {
+.indi-wetransfer-success__message {
     display: block;
     font-family: sans-serif;
     font-size: em(28);
@@ -358,7 +358,7 @@
     color: #111;
 }
 
-.ozpital-wpwetransfer-success__url {
+.indi-wetransfer-success__url {
     display: block;
     margin: 1em 0 0;
     font-family: sans-serif;
@@ -372,23 +372,23 @@
     }
 }
 
-.ozpital-wpwetransfer-success__url--false {
+.indi-wetransfer-success__url--false {
     display: none;
 }
 
-.ozpital-wpwetransfer-failed {
+.indi-wetransfer-failed {
     padding: em(20);
     text-align: center;
     background-color: #eb5757;
 }
 
-.ozpital-wpwetransfer-failed__message {
+.indi-wetransfer-failed__message {
     font-family: sans-serif;
     font-size: em(30);
     color: #fff;
 }
 
-.ozpital-wpwetransfer-progress {
+.indi-wetransfer-progress {
     transform: rotate(0);
     transform-origin: 50% 50%;
 
@@ -396,18 +396,18 @@
 
     animation-duration: 4000ms;
     animation-iteration-count: infinite;
-    animation-name: ozpital-progress-spin;
+    animation-name: indi-progress-spin;
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 }
 
-.ozpital-wpwetransfer-progress__background {
+.indi-wetransfer-progress__background {
     stroke: #e4e2de;
 
     will-change: stroke-width;
 }
 
-.ozpital-wpwetransfer-progress__amount {
+.indi-wetransfer-progress__amount {
     stroke: #3e9ef9;
 
     transform: rotate(0);
@@ -417,7 +417,7 @@
     will-change: stroke-width, stroke-dashoffset, transform;
 }
 
-@keyframes ozpital-progress-spin {
+@keyframes indi-progress-spin {
     0% {
         transform: rotate(0deg);
     }

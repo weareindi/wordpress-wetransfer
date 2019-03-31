@@ -1,7 +1,7 @@
 // Directives
-import {WPWeTransfer} from './directives/WPWeTransfer/WPWeTransfer';
+import {WeTransfer} from './directives/WeTransfer/WeTransfer';
 
 // Run
-for (var i = 0; i < document.querySelectorAll('[ozpital-wpwetransfer]').length; i++) {
-    new WPWeTransfer(document.querySelectorAll('[ozpital-wpwetransfer]')[i]);
+for (var i = 0; i < document.querySelectorAll('.indi-wetransfer').length; i++) {
+    new WeTransfer(document.querySelectorAll('.indi-wetransfer')[i]);
 }
