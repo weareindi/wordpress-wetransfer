@@ -1,0 +1,27 @@
+<div class="indi-wetransfer-transferer">
+    <div class="indi-wetransfer-transferer__list"></div>
+
+    <label class="indi-wetransfer-transferer__set indi-wetransfer-transferer__set--file">
+        <span class="indi-wetransfer-transferer__icon indi-wetransfer-transferer__icon--add">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 5H0.5C0.2235 5 0 5.226 0 5.505V6.495C0 6.7785 0.224 7 0.5 7H5V11.5C5 11.7765 5.226 12 5.505 12H6.495C6.7785 12 7 11.776 7 11.5V7H11.5C11.7765 7 12 6.774 12 6.495V5.505C12 5.2215 11.776 5 11.5 5H7V0.5C7 0.2235 6.774 0 6.495 0H5.505C5.2215 0 5 0.224 5 0.5V5V5Z" fill="white"/></svg>
+        </span>
+
+        <span class="indi-wetransfer-transferer__label">
+            <span class="indi-wetransfer-transferer__label-text">${label}</span>
+        </span>
+        <span class="indi-wetransfer-transferer__notice">
+            <span class="indi-wetransfer-transferer__notice-text">${remaining}</span>
+        </span>
+        <span class="indi-wetransfer-transferer__element indi-wetransfer-transferer__element--file">
+            <input type="file" name="indi-wetransfer-files[]" value="" class="indi-wetransfer-transferer__input indi-wetransfer-transferer__input--file" multiple>
+        </span>
+    </label>
+
+    <div class="indi-wetransfer-transferer__footer">
+        <button class="indi-wetransfer-transferer__button indi-wetransfer-transferer__button--submit" disabled>
+            <span class="indi-wetransfer-transferer__label">
+                <span class="indi-wetransfer-transferer__label-text">Transfer</span>
+            </span>
+        </button>
+    </div>
+</div>

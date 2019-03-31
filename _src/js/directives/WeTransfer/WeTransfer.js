@@ -1,4 +1,4 @@
-import FormTemplate from '../../templates/FormTemplate.html';
+import TransfererTemplate from '../../templates/TransfererTemplate.html';
 import FileItemTemplate from '../../templates/FileItemTemplate.html';
 import SuccessTemplate from '../../templates/SuccessTemplate.html';
 import FailedTemplate from '../../templates/FailedTemplate.html';
@@ -13,7 +13,7 @@ import closest from 'closest';
 import filesize from 'filesize';
 import 'custom-event-polyfill';
 
-export class WPWeTransfer {
+export class WeTransfer {
     constructor(surface) {
         this.error = new ErrorService();
         this.validate = new ValidationService();
@@ -40,16 +40,16 @@ export class WPWeTransfer {
     prepareElements() {
         this.elements = {};
         this.elements.surface = this.surface;
-        this.elements.content = this.surface.querySelector('.ozpital-wpwetransfer__content');
+        this.elements.content = this.surface.querySelector('.indi-wetransfer__content');
     }
 
     async initalise() {
         try {
-            await this.elements.surface.classList.add('ozpital-wpwetransfer--enhanced');
+            await this.elements.surface.classList.add('indi-wetransfer--enhanced');
             await this.loadStylesheet();
-            await this.replaceTemplate(FormTemplate);
+            await this.replaceTemplate(TransfererTemplate);
             await this.registerForm();
-            await this.updateFormTemplate();
+            await this.updateTransfererTemplate();
             await this.registerBinds();
             await this.resetFiles();
             await this.updateStatus('ready');
@@ -62,23 +62,23 @@ export class WPWeTransfer {
         const element = document.createElement('link');
         element.rel = 'stylesheet';
         element.type = 'text/css';
-        element.href = owpwt.pluginDir + '/assets/css/enhanced.css';
+        element.href = indiwt.pluginDir + '/assets/css/enhanced.css';
         document.body.appendChild(element);
     }
 
     registerForm() {
-        this.elements.form = this.elements.surface.querySelector('.ozpital-wpwetransfer-form');
-        this.elements.formLabel = this.elements.form.querySelector('.ozpital-wpwetransfer-form__label-text');
-        this.elements.formNotice = this.elements.form.querySelector('.ozpital-wpwetransfer-form__notice-text');
-        this.elements.input = this.elements.form.querySelector('.ozpital-wpwetransfer-form__input--file');
-        this.elements.list = this.elements.form.querySelector('.ozpital-wpwetransfer-form__list');
-        this.elements.submit = this.elements.form.querySelector('.ozpital-wpwetransfer-form__button--submit');
+        this.elements.transferer = this.elements.surface.querySelector('.indi-wetransfer-transferer');
+        this.elements.transfererLabel = this.elements.transferer.querySelector('.indi-wetransfer-transferer__label-text');
+        this.elements.transfererNotice = this.elements.transferer.querySelector('.indi-wetransfer-transferer__notice-text');
+        this.elements.input = this.elements.transferer.querySelector('.indi-wetransfer-transferer__input--file');
+        this.elements.list = this.elements.transferer.querySelector('.indi-wetransfer-transferer__list');
+        this.elements.submit = this.elements.transferer.querySelector('.indi-wetransfer-transferer__button--submit');
     }
 
     registerProgressBar() {
-        this.elements.progress = this.elements.surface.querySelector('.ozpital-wpwetransfer-progress');
-        this.elements.progressBackground = this.elements.surface.querySelector('.ozpital-wpwetransfer-progress__background');
-        this.elements.progressAmount = this.elements.surface.querySelector('.ozpital-wpwetransfer-progress__amount');
+        this.elements.progress = this.elements.surface.querySelector('.indi-wetransfer-progress');
+        this.elements.progressBackground = this.elements.surface.querySelector('.indi-wetransfer-progress__background');
+        this.elements.progressAmount = this.elements.surface.querySelector('.indi-wetransfer-progress__amount');
     }
 
     updateProgressBar(percent) {
@@ -89,7 +89,7 @@ export class WPWeTransfer {
     }
 
     triggerTransferProgressEvent(progress) {
-        const event = new CustomEvent('ozpital-wpwetransfer-transferring', {
+        const event = new CustomEvent('wetransfer-transferring', {
             detail: {
                 progress: progress
             }
@@ -99,7 +99,7 @@ export class WPWeTransfer {
     }
 
     triggerFilesChangeEvent() {
-        const event = new CustomEvent('ozpital-wpwetransfer-change', {
+        const event = new CustomEvent('wetransfer-change', {
             detail: {
                 files: this.files
             }
@@ -109,7 +109,7 @@ export class WPWeTransfer {
     }
 
     triggerSuccessEvent() {
-        const event = new CustomEvent('ozpital-wpwetransfer-success', {
+        const event = new CustomEvent('wetransfer-success', {
             detail: {
                 id: this.transfer.id,
                 url: this.transfer.url,
@@ -121,9 +121,7 @@ export class WPWeTransfer {
     }
 
     registerBinds() {
-        this.elements.form.addEventListener('submit', (event) => {
-            event.preventDefault();
-
+        this.elements.submit.addEventListener('click', (event) => {
             this.submit();
         }, false);
 
@@ -133,7 +131,7 @@ export class WPWeTransfer {
 
             this.disableSubmit();
             this.processFiles(this.elements.input.files);
-            this.updateFormTemplate();
+            this.updateTransfererTemplate();
             this.populateFilesList();
             this.processStatus();
             this.resetInput();
@@ -153,7 +151,7 @@ export class WPWeTransfer {
 
             this.disableSubmit();
             this.processFiles(event.dataTransfer.files);
-            this.updateFormTemplate();
+            this.updateTransfererTemplate();
             this.populateFilesList();
             this.processStatus();
             this.triggerFilesChangeEvent();
@@ -163,14 +161,14 @@ export class WPWeTransfer {
             event.stopPropagation();
             event.preventDefault();
 
-            if (!event.target.classList.contains('ozpital-wpwetransfer-item__button--delete') && !event.target.parentElement.classList.contains('ozpital-wpwetransfer-item__button--delete')) {
+            if (!event.target.classList.contains('indi-wetransfer-item__button--delete') && !event.target.parentElement.classList.contains('indi-wetransfer-item__button--delete')) {
                 return false;
             }
 
-            this.removeFile(closest(event.target, '.ozpital-wpwetransfer-item').getAttribute('ozpital-wpwetransfer-item'));
+            this.removeFile(closest(event.target, '.indi-wetransfer-item').getAttribute('indi-wetransfer-item'));
             this.disableSubmit();
             this.processFiles();
-            this.updateFormTemplate();
+            this.updateTransfererTemplate();
             this.populateFilesList();
             this.processStatus();
             this.triggerFilesChangeEvent();
@@ -260,7 +258,7 @@ export class WPWeTransfer {
     /**
      * Update Form Template Variables
      */
-    updateFormTemplate() {
+    updateTransfererTemplate() {
         let label = `Add your files`;
         let remaining = `Add up to ${this.bytesToHuman(this.settings.maximumBytes)}`;
 
@@ -285,8 +283,8 @@ export class WPWeTransfer {
             }
         }
 
-        this.elements.formLabel.innerHTML = label;
-        this.elements.formNotice.innerHTML = remaining;
+        this.elements.transfererLabel.innerHTML = label;
+        this.elements.transfererNotice.innerHTML = remaining;
     }
 
     /**
@@ -306,6 +304,7 @@ export class WPWeTransfer {
             await this.mergeFilesIntoTransfer();
             await this.uploadFiles();
             await this.finalizeTransfer();
+            await this.finish();
             await this.finish();
         } catch(error) {
             console.error(error);
@@ -336,11 +335,11 @@ export class WPWeTransfer {
      */
     async getToken() {
         const ajaxSettings = {
-            url: owpwt.ajaxUrl,
+            url: indiwt.ajaxUrl,
             method: 'post',
             headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
             data: qs.stringify({
-                action: 'owpwt--auth'
+                action: 'indiwt--auth'
             })
         };
 
@@ -375,11 +374,11 @@ export class WPWeTransfer {
         }
 
         const ajaxSettings = {
-            url: owpwt.ajaxUrl,
+            url: indiwt.ajaxUrl,
             method: 'post',
             headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
             data: qs.stringify({
-                action: 'owpwt--transfer',
+                action: 'indiwt--transfer',
                 token: this.token,
                 files: files
             })
@@ -469,11 +468,11 @@ export class WPWeTransfer {
         this.error.checkPartNumber(part_number);
 
         const ajaxSettings = {
-            url: owpwt.ajaxUrl,
+            url: indiwt.ajaxUrl,
             method: 'post',
             headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
             data: qs.stringify({
-                action: 'owpwt--url',
+                action: 'indiwt--url',
                 token: this.token,
                 transfer_id: this.transfer.id,
                 part_number: part_number,
@@ -505,7 +504,7 @@ export class WPWeTransfer {
         }
 
         let progress = 100 - ((x / this.totalUploadableBytes) * 100);
-        document.querySelector('.ozpital-wpwetransfer-transfering__percentage').setAttribute('data-amount', Math.round(progress));
+        document.querySelector('.indi-wetransfer-transfering__percentage').setAttribute('data-amount', Math.round(progress));
 
         this.updateProgressBar(progress);
         this.triggerTransferProgressEvent(progress);
@@ -550,11 +549,11 @@ export class WPWeTransfer {
      */
     async completeFileUpload(transfer_file, uploaded_parts) {
         const ajaxSettings = {
-            url: owpwt.ajaxUrl,
+            url: indiwt.ajaxUrl,
             method: 'post',
             headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
             data: qs.stringify({
-                action: 'owpwt--complete-file-upload',
+                action: 'indiwt--complete-file-upload',
                 token: this.token,
                 transfer_id: this.transfer.id,
                 file_id: transfer_file.id,
@@ -582,11 +581,11 @@ export class WPWeTransfer {
      */
     async finalizeTransfer() {
         const ajaxSettings = {
-            url: owpwt.ajaxUrl,
+            url: indiwt.ajaxUrl,
             method: 'post',
             headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
             data: qs.stringify({
-                action: 'owpwt--finalize-transfer',
+                action: 'indiwt--finalize-transfer',
                 token: this.token,
                 transfer_id: this.transfer.id
             })
@@ -602,17 +601,57 @@ export class WPWeTransfer {
             });
     }
 
+    getType() {
+        if (!this.surface.hasAttribute('type')) {
+            return false;
+        }
+
+        return this.surface.getAttribute('type');
+    }
+
     /**
      * Do the final tasks
      */
     finish() {
         this.updateStatus('success');
+
+        // Prepare variables
+        let transferCompleteMessage = indiwt.transferCompleteMessage;
+        let transferCompleteShowUrl = indiwt.transferCompleteShowUrl ? indiwt.transferCompleteShowUrl : 'false';
+        if (this.getType() === 'cf7') {
+            transferCompleteMessage = indiwt_cf7.transferCompleteMessage;
+            transferCompleteShowUrl = indiwt_cf7.transferCompleteShowUrl ? indiwt_cf7.transferCompleteShowUrl : 'false';
+        }
+
+        // Update template
         this.replaceTemplate(SuccessTemplate, [
-            {'${message}': owpwt.transferCompleteMessage},
-            {'${showurl}': owpwt.transferCompleteShowUrl},
+            {'${message}': transferCompleteMessage},
+            {'${showurl}': transferCompleteShowUrl},
             {'${url}': this.transfer.url}
         ]);
 
+        // Update form field
+        this.updateForFieldValue();
+
+        // Trigger success event
         this.triggerSuccessEvent();
+    }
+
+    /**
+     * Update field defined in the 'indi-wetransfer-for' attribute
+     */
+    updateForFieldValue() {
+        if (!this.elements.surface.hasAttribute('for')) {
+            return false;
+        }
+
+        const target = this.elements.surface.getAttribute('for');
+        const field = document.querySelector(`#${target}`);
+
+        if (field.length === 0) {
+            return false;
+        }
+
+        field.value = this.transfer.url;
     }
 }
